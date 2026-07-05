@@ -1,6 +1,6 @@
 ---
-title: Welcome to Quartz
+title: Welcome to Helix of Computing!
 ---
+[![Hits](https://hits.sh/helix-of-computing.com.svg)](https://hits.sh/helix-of-computing.com/)
 
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
+Helix of Computing is a blog about computational learning and various related topics. Use the Explorer on the left to browse through the subjects!
