@@ -9,6 +9,10 @@
 
 Functor를 적을 때 아래첨자는 일반적으로 생략된다. 
 
+## Full Functor and Faithful Functor
+
+어느 functor $F \in C \Rightarrow D$에 대해서 $F_{hom}$이 surjective 하면 이를 full functor라고 한다. 비슷하게 $F_{hom}$이 injective하면 이를 faithful functor라고 한다.
+
 ## Functor Image
 
 Functor $F \in C \Rightarrow D$에 대한 image $F(C)$는 다음과 같은 graph로 정의된다. 이때 $F(C)$가 반드시 category인 것은 아니다.

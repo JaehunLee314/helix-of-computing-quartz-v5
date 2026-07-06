@@ -23,7 +23,7 @@ $$
 
 ## Natural Transformation의 의미
 
-두 functor $F, G \in C \Rightarrow D$간의 natural trnasformation $\alpha$는 같은 구조 $C$에서 파생되는 두 functor image $F(C), G(C)$를 서로 이어주는 $D$의 morphism들의 indexed collection 이다. 이때 naturality condition은 $\alpha$에 의해 정의되는 mapping이 $f \in hom\ C$의 의미를 보존하도록 강제한다.
+두 functor $F, G \in C \Rightarrow D$간의 natural trnasformation $\alpha$는 같은 구조 $C$에서 파생되는 두 functor image $F(C), G(C)$의 object을 이어주는 $D$의 morphism의 indexed collection 이다. 이때 naturality condition은 $\alpha$에 의해 정의되는 mapping이 $f \in hom\ C$의 의미를 보존하도록 강제한다.
 
 예를 들어서 $x$가 "느리다", $y$가 "빠르다"라는 단어이고 $f$는 반의어 관계를 나타낸다고 해 보자. 이때 $F$가 한국어를 영어로 번역하고 $G$가 한국어를 일본어로 번역한다면 예를 들어 다음과 같은 결과가 나올 것이다.
 
