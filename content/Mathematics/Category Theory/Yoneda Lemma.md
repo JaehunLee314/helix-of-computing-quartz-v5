@@ -131,7 +131,7 @@ $$
 이로부터 Functor $Y \in D^{op} \Rightarrow \text{Set}^D$를 생각하자. 이때 $r \in ob\ D, h \in d \Rightarrow_D r$에 대해 다음과 같이 정의하자.
 
 $$
-Y(r) = D(r, -) \qquad Y(h) = \gamma^{-1}(h)
+Y(r) = D(r, -) \qquad Y(h^{op}) = \gamma^{-1}(h)
 $$
 
 이때 $\gamma$가 bijection이므로 $Y$는 full and faithful functor이다. 이러한 $Y$를 Yoneda functor 혹은 Yoneda embedding 이라고 한다. 
