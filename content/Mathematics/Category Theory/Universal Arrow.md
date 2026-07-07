@@ -4,7 +4,7 @@
 *(그림에서 $\to$는 하나의 morphim을, $\Rightarrow$는 두 object간에 정의된 모든 morphism의 hom-set을 의미한다.)*
 
 **Definition. Universal Arrow**
-Category $D$에서 $C로 가는 functor $S$와 어느 $c \in ob\ C$에 대하여 어느 $r \in ob\ D$과 $u \in c \Rightarrow_C S(r)$이 존재하여 모든 $f \in c \Rightarrow S(d)$에 대해 $f = u ; S(f')$인 $f' \in r \Rightarrow d$가 유일하게 존재하도록 한다면 이러한 $r, u$의 순서쌍 $(r, u)$를 $c$에서 $S$로 가는 universal arrow 라고 한다. 
+Category $D$에서 C로 가는 functor $S$와 어느 $c \in ob\ C$에 대하여 어느 $r \in ob\ D$과 $u \in c \Rightarrow_C S(r)$이 존재하여 모든 $f \in c \Rightarrow S(d)$에 대해 $f = u ; S(f')$인 $f' \in r \Rightarrow d$가 유일하게 존재하도록 한다면 이러한 $r, u$의 순서쌍 $(r, u)$를 $c$에서 $S$로 가는 universal arrow 라고 한다. 
 
 ## Properties of Universal Arrow
 

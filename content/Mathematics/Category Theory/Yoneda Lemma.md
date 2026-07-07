@@ -4,7 +4,7 @@
 Yoneda lemma는 다음과 같이 주어진다.
 
 **Lemma. Yoneda Lemma**
-Functor $K \in D \Rightarrow \text{Set}$와 $r \in ob\ D$를 가정하자. 이때 $D$의 hom-set은 samll set 이라고 하자. 그러면 다음과 같은 bijection $\gamma$가 존재하며,
+Functor $K \in D \Rightarrow \text{Set}$와 $r \in ob\ D$를 가정하자. 또한 $D$의 임의의 hom-set $x \Rightarrow_D y$가 모두 small set이라고 하자. 그러면 다음과 같은 bijection $\gamma$가 존재하며,
 
 $$
 \gamma \in (D(r, -) \Rightarrow_{\text{Set}^D} K) \Rightarrow K(r)
@@ -135,6 +135,9 @@ Y(r) = D(r, -) \qquad Y(h^{op}) = \gamma^{-1}(h)
 $$
 
 이때 $\gamma$가 bijection이므로 $Y$는 full and faithful functor이다. 이러한 $Y$를 Yoneda functor 혹은 Yoneda embedding 이라고 한다. 
+
+## Footnote
+- Small set에 관한 자세한 논의는 참고문헌 (1)의 21-30pp를 볼 것.
 
 ## References
 (1) Mac Lane, Categories for the Working Mathematicians
