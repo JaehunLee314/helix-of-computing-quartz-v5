@@ -9,11 +9,23 @@ $$
 c \in ob\ C, d \in ob\ D \to (c \Rightarrow_C R(d)) \cong (L(c) \Rightarrow_D d)
 $$
 *(Naturality)*  
-$c \in ob\ C, d \in ob\ D$에 대해 $(c \Rightarrow_C R(d)) \rightarrow (L(c) \Rightarrow_D d)$ 인 isomorphism $\alpha_{c, d}$와 비슷하게 정의되는 $\alpha_{c', d'}$을 가정하자. 이때 왼쪽 그림과 같은 $f, g, h$에 대해 오른쪽의 식이 성립한다.
+$c \in ob\ C, d \in ob\ D$에 대해 $(c \Rightarrow_C R(d)) \rightarrow (L(c) \Rightarrow_D d)$ 인 isomorphism $\alpha_{c, d}$를 가정하자. 이때 왼쪽 그림과 같은 $f, g, h$에 대해 오른쪽의 식이 성립한다.
 
 $$
 \begin{array}{ccc} \mathcal{C} & \qquad & \mathcal{D} \\ c' & \xrightarrow{\in L} & L(c') \\ \ \bigg\downarrow \scriptstyle{f} & & \quad \bigg\downarrow \scriptstyle{L(f)} \\ c & \xrightarrow{\in L} & L(c) \\ \ \bigg\downarrow \scriptstyle{h} & & \qquad \bigg\downarrow \scriptstyle{\alpha_{c, d}(h)} \\ R(d) & \xleftarrow{\in R} & d \\ \quad \bigg\downarrow \scriptstyle{R(g)} & & \ \bigg\downarrow \scriptstyle{g} \\ R(d') & \xleftarrow{\in R} & d' \end{array}
 \qquad \qquad \alpha_{c', d'}(f;h;R(g)) = L(f);\alpha_{c, d}(h);g
+$$
+
+## Adjoints의 다른 정의
+
+다음과 같은 hom-functor $C(-, R(-)), D(L(-), -) \in C^{op} \times D \Rightarrow \text{Set}$를 생각하자. 그러면 $L \dashv R$인 것과 $C(-, R(-))$에서 $D(L(-), -)$로 가는 natural isomorphism $\alpha$가 존재하는 것은 동치이다. 이때 naturality condition은 다음 commutative diagram으로 주어진다.
+
+$$
+\begin{array}{ccc} 
+C(c, R(d)) & \stackrel{\alpha_{c, d}}{\longrightarrow} & D(L(c), d) \\
+\llap{\scriptstyle C(f, R(g))}\bigg\downarrow & & \bigg\downarrow\rlap{\scriptstyle \ D(L(f), g)} \\ 
+C(c', R(d')) & \stackrel{\alpha_{c', d'}}{\longrightarrow} & D(L(c'), d')
+\end{array}
 $$
 
 ## Example: Currying
