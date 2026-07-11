@@ -1,4 +1,4 @@
-**Prerequisites:** [[Arrow Notation]], [[Category]], [[Functor]]
+**Prerequisites:** [[Notation for Arrow and Logic]], [[Category]], [[Functor]]
 
 ## Covariant Hom-Functor
 

@@ -25,7 +25,7 @@
 - 2026-07-04 (Done)
 	- PAC Learnability, APAC Learnability, VC Dimension
 - 2026-07-11
-	- Linear Model, TBD
+	- [[Presheaf and Sheaf]], [[Lawvere's Fixed Point Theorem]], Linear Model, Boosting
 
 ## 참고문헌
 

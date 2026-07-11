@@ -8,7 +8,7 @@
 
 - Some texts use $\frac{\partial y}{\partial x^T}$ to represent $(\frac{\partial y}{\partial x})^T$.
 
-## In Relation to the Gradient
+## Gradient
 
 Suppose $x \in R^{m \times 1}$ and $y \in R$ s.t. $y = f(x)$. Then the gradient is defined as follows.
 
@@ -28,7 +28,7 @@ $$
 \nabla^2f(x) = \frac{\partial}{\partial x}(\frac{\partial y}{\partial x})^T
 $$
 
-## In Relation to Jacobian Matrix
+## Jacobian Matrix
 
 Suppose $x \in R^{n \times 1}$ and $y \in R^{m \times 1}$ s.t. $y = f(x)$. Then the Jacobian matrix is defined as follows.
 
@@ -36,7 +36,7 @@ $$
 J_f (x) = \frac{\partial y}{\partial x}
 $$
 
-## In Relation to the Chain Rule
+## Chain Rule
 
 For any possible combination of shapes for $x, y, z$, the following chain rule holds.
 

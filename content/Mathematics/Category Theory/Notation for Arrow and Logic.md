@@ -12,6 +12,24 @@ $$
 
 필요한 경우 arrow의 name은 생략하고 표기할 수 있다. 
 
+## First-order Logic의 표기
+
+일반적으로 일차논리에서 문장의 연언(and)는 $\land$으로 선언(or)은 $\lor$로 적는다. 이곳에서는 편의를 위해 $,$로 문장을 잇는 것으로 연언을 표기하고, $or$이나 $\lor$등으로 선언을 표기한다. 또한 조건언은 $\to$로 표기한다.
+
+$$
+P \land Q \leftrightarrow P, Q
+$$
+
+한편 일차논리에서는 $\forall x \in X. Px$와 같이 전칭양화사를 사용한다. 그러나 이곳에서는 논리적 맥락 하에서 그 변수의 범위(bound)가 분명할 때 전칭양화사를 생략한다. 따라서 다음의 두 표기가 동치인 것으로 생각한다.
+
+$$
+\forall x \in X. Px \Leftrightarrow x \in X \rightarrow Px
+$$
+
+존재 양화사는 하나의 술어로 취급하여 다음과 같이 표기한다. 
+
+$$\exists x. Px \leftrightarrow \exists x, Px$$
+
 ## Arrow under Collection
 
 Arrow의 collection $G$를 가정하자. 이제 다음과 같이 정의한다.

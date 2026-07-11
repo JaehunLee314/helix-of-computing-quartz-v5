@@ -1,4 +1,4 @@
-**Prerequisites:** [[Arrow Notation]]
+**Prerequisites:** [[Notation for Arrow and Logic]]
 
 > A mathematician is a machine for turning coffee into theorems.
 

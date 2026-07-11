@@ -52,7 +52,7 @@ $$
 T_{x^*} (f_{ij}) = g_{ij} \quad where \quad t \in X_i \to g_{ij}(t) = f_{ij}'(x_i^*) \cdot t
 $$
 
-### Functor Propterties
+### Tangent Functor의 성질
 
 이제 tangent functor가 identity와 composition을 보존하는지 살펴보자. 
 
@@ -73,7 +73,7 @@ $$
 
 두 식이 같음으로 tangent functor는 composition을 보존한다.
 
-### Useful Properties
+### 미분의 성질
 
 이제 우리에게 잘 알려진 미분의 성질들을 $T_{x^*} V$ 에서 다음과 같이 적을 수 있다.
 
@@ -87,11 +87,11 @@ $$
 \frac{dz}{dx}=\frac{dz}{dy}\frac{dy}{dx}
 $$
 
-## In case of Higher Dimensions
+## 다차원 공간에서
 
 보다 다차원 공간에서 우리는 $f_{ij}'(x_i^*)$ 대신 Jacobian matrix를 사용하는 것으로 위의 논의를 일반화할 수 있다.
 
-## Conclusion
+## 결론
 
 Category of variables에 tangent functor를 적용하면 미소 변수들에 대한 직관적인 이해를 얻는다.
 
