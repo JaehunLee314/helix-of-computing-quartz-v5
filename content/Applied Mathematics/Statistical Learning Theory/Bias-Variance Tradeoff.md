@@ -1,4 +1,4 @@
-이곳에서는 기계 학습에서 자주 등장하는 Bias-Variance Tradeoff 에 대해 살펴본다.
+이곳에서는 기계 학습에서 자주 등장하는 Bias-Variance Tradeoff, 보다 일반적으로는 Bias-Complexity Tradeoff에 대해 살펴본다.
 
 ## 정의
 
@@ -42,7 +42,7 @@ $$
 L_D(h_S) = L_D(h_D) + \epsilon_{est}
 $$
 
-즉, 우리는 이 모델 집합 $H$에서 가능한 최적의 loss인 $L_D(h_D)$에, loss의 추정에 의해 발생하는 오차 $\epsilon_{est}$를 더한 모델의 loss $L_D(h_S)$를 얻는다. 이때 $L_D(h_D)$를 approximation error ($\epsilon_{app}$)라 부르고, $\epsilon_{est}$를 estimation error라고 한다.
+즉, 우리는 이 모델 집합 $H$에서 가능한 최적의 loss인 $L_D(h_D)$에, loss의 추정 등에 의해 발생하는 오차 $\epsilon_{est}$를 더한 모델의 loss $L_D(h_S)$를 얻는다. 이때 $L_D(h_D)$를 approximation error ($\epsilon_{app}$)라 부르고, $\epsilon_{est}$를 estimation error라고 한다.
 
 Approximation error는 우리가 가진 모델 집합 $H$의 한계로 인해 발생하는 오차이다. 한편, estimation error는 전체 분포 $D$가 아니라 샘플 $S$를 통해 계산을 수행하기 때문에 발생하는 오차이다. Underfitting과 overfitting은 다음과 같이 해석된다.
 

@@ -10,8 +10,7 @@
 	- (A)PAC Learnability & VC Dimension
 	- 각종 머신러닝 기법의 이론적 이해
 
-- Information Theory
-	- TBD
+- Various Paper Reviews
 
 ## 스터디 일정
 
@@ -24,8 +23,11 @@
 	- Natural Transformation (2), [[Limit]], [[Adjoints]]
 - 2026-07-04 (Done)
 	- PAC Learnability, APAC Learnability, VC Dimension
-- 2026-07-11
+- 2026-07-11 (Done)
 	- [[Presheaf and Sheaf]], [[Lawvere's Fixed Point Theorem]], Linear Model, Boosting
+- 2026-07-19 (Offline)
+	- Model Selection and Validation, Regularization and Stability
+	- Paper Review: Antropic, Verbalizable Representations Form a Global Workspace in Language Models. ([Link](https://transformer-circuits.pub/2026/workspace/index.html))
 
 ## 참고문헌
 
@@ -40,6 +42,9 @@ George Casella, Roger L. Berger, Statistical Inference
 
 *(Information Theory)*
 Joy A. Thomas and Thomas M. Cover, Elements of Information Theory
+
+*(Paper Review)*
+Antropic, Verbalizable Representations Form a Global Workspace in Language Models. ([Link](https://transformer-circuits.pub/2026/workspace/index.html))
 
 ## 참가 문의
 [동아리](https://www.aing.uk) discord를 통해 연락해 주세요.
