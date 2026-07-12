@@ -20,16 +20,14 @@ $$
 
 (여기서 $X \Rightarrow Y$는 $X$에서 $Y$로 가는 모든 함수의 집합이다.)
 
-이제 VC Ddmension은 다음과 같이 정의된다.
+이제 VC Dimension은 다음과 같이 정의된다.
 
 **Definition. VC Dimension**
 가설 집합 $H \subseteq A \Rightarrow B$의 VC dimension $VCDim(H)$는 다음과 같이 정의된다.
 
 $$
-VCDim(H) = max \{ m | C \subseteq A, |C|=m \to H \text{ shatters } C \}
+VCDim(H) = max \{ m | \exists C, C \subseteq A, |C|=m, H \text{ shatters } C \}
 $$
-
-즉 $VCDim(H)$는 $H$가 완전히 shattering 할 수 있는 $C$의 최대 크기이다.
 
 우리는 이와 비슷하게 growth function을 정의할 수 있다.
 
@@ -37,5 +35,5 @@ $$
 가설 집합 $H \subseteq A \Rightarrow B$에 대해 growth function $\tau_H : N \to N$은 다음과 같이 정의된다.
 
 $$
-\tau_H(m)=\underset{C \subseteq X, |C|=m}{max} |H_C|
+\tau_H(m)=\underset{C \subseteq A, |C|=m}{max} |H_C|
 $$
