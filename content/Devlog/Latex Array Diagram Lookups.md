@@ -42,7 +42,11 @@ $$
 ## Triangle Diagram
 
 - Lower-left
-$$\begin{array}{ccc} X & & \\ \llap{\scriptstyle b}\bigg\downarrow & \stackrel{e}{\searrow} & \\ R & \stackrel{d}{\longrightarrow} & Z \end{array}$$
+$$
+\begin{array}{ccc} X & & \\ \llap{\scriptstyle b}\bigg\downarrow & \stackrel{e}{\searrow} & \\ R & \stackrel{d}{\longrightarrow} & Z \end{array}
+$$
 
 - Upper-right
-$$\begin{array}{ccc} X & \stackrel{a}{\longrightarrow} & Y \\ & \stackrel{e}{\searrow} & \bigg\downarrow\rlap{\scriptstyle \ c} \\ & & Z \end{array}$$
+$$
+\begin{array}{ccc} X & \stackrel{a}{\longrightarrow} & Y \\ & \stackrel{e}{\searrow} & \bigg\downarrow\rlap{\scriptstyle \ c} \\ & & Z \end{array}
+$$
