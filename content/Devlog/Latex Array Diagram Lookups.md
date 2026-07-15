@@ -50,3 +50,13 @@ $$
 $$
 \begin{array}{ccc} X & \stackrel{a}{\longrightarrow} & Y \\ & \stackrel{e}{\searrow} & \bigg\downarrow\rlap{\scriptstyle \ c} \\ & & Z \end{array}
 $$
+
+- Triangle Side-by-Side
+
+$$  
+\begin{array}{ccccccc}
+X & & & & Y & & \\
+\llap{\scriptstyle }\bigg\downarrow & \stackrel{}{\searrow} & & \qquad\qquad & \llap{\scriptstyle d}\bigg\downarrow & \stackrel{e}{\searrow} & \\
+X & \stackrel{}{\longrightarrow} & R & & P & \stackrel{f}{\longrightarrow} & Q
+\end{array}
+$$

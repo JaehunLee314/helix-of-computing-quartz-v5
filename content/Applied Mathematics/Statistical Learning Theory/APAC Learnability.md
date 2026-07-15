@@ -30,9 +30,9 @@ $$
 L_S (h) = \frac{1}{m}\sum_{i=1}^m l(h, (X_i, Y_i))
 $$
 
-## ERM Method
+## ERM Rule
 
-Empirical risk minimization method는 앞서서 정의한 empirical risk function을 최소화하는 learning algorithm이다. 즉 learning algorithm $ERM_{\mathcal{H}}: (\mathcal{X} \times \mathcal{Y})^m \to \mathcal{H}$은 다음과 같이 정의된다.
+Empirical risk minimization rule은 앞서서 정의한 empirical risk function을 최소화하는 learning algorithm이다. 즉 learning algorithm $ERM_{\mathcal{H}}: (\mathcal{X} \times \mathcal{Y})^m \to \mathcal{H}$은 다음과 같이 정의된다.
 
 $$
 ERM_{\mathcal{H}}(S) = \underset{h \in \mathcal{H}}{argmin} L_S(h)
@@ -58,7 +58,7 @@ $$
 m \geq m_A (\epsilon, \delta) \to \underset{S \sim_{i.i.d.} D}{P}((L_D(A_m(S))) \leq \min_{h \in \mathcal{H}} L_D(h) + \epsilon) \geq 1 - \delta
 $$
 
-많은 경우에 이 정의를 만족시키는 learning algorithm은 ERM method이다.
+많은 경우에 이 정의를 만족시키는 learning algorithm은 ERM rule이다.
 
 ## References
 (1) Shalev-Shwartz, Ben-David, *Understanding Machine Learning*  

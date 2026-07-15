@@ -1,4 +1,4 @@
-Vapnik-Chervonenkis dimension (VC Dimension)에 대해 살펴보자.
+Vapnik-Chervonenkis dimension (VC dimension)에 대해 살펴보자.
 
 ## VC Dimension의 정의
 
