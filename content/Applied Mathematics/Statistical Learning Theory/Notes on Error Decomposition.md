@@ -23,7 +23,7 @@ $$
 Model space는 각 model $h$를 하나의 vector로 하는 subset of a vector space이다. 이때 우리는 true labeling function $f$, 달성 가능한 최적의 모델 $h^* = \arg\min_{h \in \mathcal{H}} L_D(h)$, 그리고 실제 학습에서 주어지는 모델 $h_S$ 간의 관계를 다음과 같이 벡터 간의 관계로 묘사할 수 있다. ($h^* = f + \Delta h^*, h_S = h^* + r_S$)
 
 $$
-\begin{array}{ccc} f & & \\ \llap{\scriptstyle \Delta h^*}\bigg\downarrow & \stackrel{}{\searrow} & \\ h^* & \stackrel{r_S}{\longrightarrow} & h_S \end{array}
+\begin{array}{ccc} f & & \\ \llap{\scriptstyle Δ h^*}\bigg\downarrow & \stackrel{}{\searrow} & \\ h^* & \stackrel{r_S}{\longrightarrow} & h_S \end{array}
 $$
 
 이는 다음과 같은 bias-complexity tradeoff의 다른 표현이다.
