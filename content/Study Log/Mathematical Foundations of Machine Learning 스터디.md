@@ -25,7 +25,7 @@
 	- PAC Learnability, APAC Learnability, VC Dimension
 - 2026-07-11 (Done)
 	- [[Presheaf and Sheaf]], [[Lawvere's Fixed Point Theorem]], Linear Model, Boosting
-- 2026-07-19 (Offline)
+- 2026-07-21 (Offline)
 	- Model Selection and Validation, Regularization and Stability
 	- Paper Review: Antropic, Verbalizable Representations Form a Global Workspace in Language Models. ([Link](https://transformer-circuits.pub/2026/workspace/index.html))
 

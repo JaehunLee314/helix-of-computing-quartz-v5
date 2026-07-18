@@ -1,4 +1,4 @@
-**Prerequisites:** [[APAC Learnability]]
+**Prerequisites:** [[PAC Learnability]]
 
 이곳에서는 기계 학습에서 자주 등장하는 Bias-Complexity Tradeoff에 대해 살펴본다.
 
