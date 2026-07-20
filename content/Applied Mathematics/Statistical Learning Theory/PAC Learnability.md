@@ -90,7 +90,6 @@ No-free-lunch theorem (참고문헌 (1), section 5.1 참고)에 의하면 어떤
 반대로 가설 집합을 적절하게 제한한다면 $A$는 PAC learnable할 수 있다. 직관적으로 만약 $D$의 일부 사례만을 관찰하는 것으로도 좋은 가설의 후보가 되는 $h$를 충분히 제한할 수 있다면 $A$는 학습 가능할 것이다. 이와 같은 개념은 [[VC Dimension]]에 의해 구체화된다.
 
 ## Footnote
-- Understand Machine Learning에서는 learning algorithm이 아니라 hypothesis class의 learnability를 정의한다. 이곳에서 논의한 것과 논의의 결은 다르지 않다.
 - 사실 loss function과 learning algorithm 간에는 밀접한 관련이 있으며 구체적인 task에 따라 적절한 loss function과 learning algorithm을 선택해야 한다.
 
 ## References
