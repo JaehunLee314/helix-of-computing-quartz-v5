@@ -7,7 +7,7 @@
 확률적 데이터 $(x, y) \sim D$와 $y = f(x)$를 만족하는 deterministic한 함수 $f$를 가정하자. 이제 ERM rule의 loss function으로 L2-norm을 사용한다고 하고 sample $S \sim_{i.i.d.} D$에 대해 ERM rule을 통해 얻는 $h_S$를 다음과 같이 정의하자.
 
 $$
-h_S = \arg\min_{h \in \mathcal{H}} L_S(h)
+h_S = \arg\min_{h \in H} L_S(h)
 $$
 
 한편 $x \in D_x$와 $S \sim_{i.i.d} D$ 그리고 논의에 필요한 $g$에 대하여 다음이 성립한다고 가정하자.
@@ -20,7 +20,7 @@ $$
 
 ## Model Decomposition
 
-Model space는 각 model $h$를 하나의 vector로 하는 subset of a vector space이다. 이때 우리는 true labeling function $f$, 달성 가능한 최적의 모델 $h^* = \arg\min_{h \in \mathcal{H}} L_D(h)$, 그리고 실제 학습에서 주어지는 모델 $h_S$ 간의 관계를 다음과 같이 벡터 간의 관계로 묘사할 수 있다. ($h^* = f + \Delta h^*, h_S = h^* + r_S$)
+Model space는 각 model $h$를 하나의 vector로 하는 subset of a vector space이다. 이때 우리는 true labeling function $f$, 달성 가능한 최적의 모델 $h^* = \arg\min_{h \in H} L_D(h)$, 그리고 실제 학습에서 주어지는 모델 $h_S$ 간의 관계를 다음과 같이 벡터 간의 관계로 묘사할 수 있다. ($h^* = f + \Delta h^*, h_S = h^* + r_S$)
 
 $$
 \begin{array}{ccc}
@@ -51,7 +51,7 @@ $$
 Approximation error의 정의를 고려하면 다음이 성립한다.
 
 $$
-\epsilon_{app} = \min_{h \in \mathcal{H}} L_D(h) = L_D(h^*) = E_x[(h^*(x) - f(x))^2] = E_x[\Delta h^*(x)^2] \cdots (3.1)
+\epsilon_{app} = \min_{h \in H} L_D(h) = L_D(h^*) = E_x[(h^*(x) - f(x))^2] = E_x[\Delta h^*(x)^2] \cdots (3.1)
 $$
 
 이제 $L_D(h_S) = \epsilon_{app} + \epsilon_{est}$이므로 (2)과 (3.1)을 연립하면 다음을 얻을 수 있다.

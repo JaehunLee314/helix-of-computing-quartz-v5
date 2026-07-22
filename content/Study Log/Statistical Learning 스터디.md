@@ -12,6 +12,9 @@
 
 - Various Paper Reviews
 
+## 스터디 키워드
+Prior Knowledge, Degree of Freedom, Structuralism, Applied Mathematics, Language Model, Reasoning.
+
 ## 스터디 일정
 
 - 2026-05-30 (Done)
@@ -25,9 +28,13 @@
 	- PAC Learnability, APAC Learnability, VC Dimension
 - 2026-07-11 (Done)
 	- [[Presheaf and Sheaf]], [[Lawvere's Fixed Point Theorem]], Linear Model, Boosting
-- 2026-07-21 (Offline)
+- 2026-07-21 Offline (Done)
+	- Review of the Previous Studies
+- 2026-08-01
 	- Model Selection and Validation, Regularization and Stability
 	- Paper Review: Antropic, Verbalizable Representations Form a Global Workspace in Language Models. ([Link](https://transformer-circuits.pub/2026/workspace/index.html))
+- 2026-08-08
+	- Paper Review: Jared Kaplan et al. Scaling Laws for Neural Language Models.
 
 ## 참고문헌
 
@@ -45,6 +52,6 @@ Joy A. Thomas and Thomas M. Cover, Elements of Information Theory
 
 *(Paper Review)*
 Antropic, Verbalizable Representations Form a Global Workspace in Language Models. ([Link](https://transformer-circuits.pub/2026/workspace/index.html))
+Jared Kaplan et al. Scaling Laws for Neural Language Models.
 
 ## 참가 문의
-[동아리](https://www.aing.uk) discord를 통해 연락해 주세요.

@@ -37,3 +37,7 @@ $$
 $$
 \tau_H(m)=\underset{C \subseteq A, |C|=m}{max} |H_C|
 $$
+
+## VC Dimension의 이해
+
+가설 집합 $H$를 생각하고 $VCDim(H) = d$라고 하자. 만약 우리가 sample $m$개를 바탕으로 추론하고자 할 때 

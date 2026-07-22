@@ -7,20 +7,20 @@
 확률적 데이터 $(x, y) \sim D : \mathcal{X} \times \mathcal{Y} \to [0, 1]$를 가정하고 sample $S \sim_{i.i.d.} D$에 대해 ERM rule을 통해 얻는 $h_S$를 다음과 같이 정의하자.
 
 $$
-h_S = \arg\min_{h \in \mathcal{H}} L_S(h)
+h_S = \arg\min_{h \in H} L_S(h)
 $$
 
 이하에서는 $h_S$의 true risk $L_D(h_S)$를 이해하는 두 가지 방법을 살펴본다.
 
 ## Approximation Error와 Estimation Error
 
-가설 집합 $\mathcal{H}$에 대해서 이론적으로 가능한 최소의 loss는 $\min_{h \in \mathcal{H}} L_D(h)$로 주어진다. 따라서 우리는 다음과 같은 분해를 생각할 수 있다.
+가설 집합 $H$에 대해서 이론적으로 가능한 최소의 loss는 $\min_{h \in H} L_D(h)$로 주어진다. 따라서 우리는 다음과 같은 분해를 생각할 수 있다.
 
 $$
-L_D(h_S) =\min_{h \in \mathcal{H}}  L_D (h) + \epsilon_{est} = \epsilon_{app} + \epsilon_{est} \qquad(\epsilon_{app}=\min_{h \in \mathcal{H}}  L_D (h) )
+L_D(h_S) =\min_{h \in H}  L_D (h) + \epsilon_{est} = \epsilon_{app} + \epsilon_{est} \qquad(\epsilon_{app}=\min_{h \in H}  L_D (h) )
 $$
 
-여기서 $\epsilon_{app}$를 approximation error라고 하고 $\epsilon_{est}$를 estimation error라고 한다. 전자는 $\mathcal{H}$에 의해 주어지는 가능한 최소의 loss이고 후자는 sampling, learning algorithm, loss estimation등에 의해 발생하는 loss이다. 특히 ERM rule이 $L_D(h_S)$가 아니라 $L_S(h_S)$를 사용하기 때문에 발생하는 loss를 포함한다.
+여기서 $\epsilon_{app}$를 approximation error라고 하고 $\epsilon_{est}$를 estimation error라고 한다. 전자는 $H$에 의해 주어지는 가능한 최소의 loss이고 후자는 sampling, learning algorithm, loss estimation등에 의해 발생하는 loss이다. 특히 ERM rule이 $L_D(h_S)$가 아니라 $L_S(h_S)$를 사용하기 때문에 발생하는 loss를 포함한다.
 
 ## Bias와 Variance
 
