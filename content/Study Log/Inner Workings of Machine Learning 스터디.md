@@ -30,12 +30,9 @@ Prior Knowledge, Degree of Freedom, Structuralism, Applied Mathematics, Language
 	- [[Presheaf and Sheaf]], [[Lawvere's Fixed Point Theorem]], Linear Model, Boosting
 - 2026-07-21 Offline (Done)
 	- Review of the Previous Studies
-- 2026-08-01
+- TBD
 	- Model Selection and Validation, Regularization and Stability
 	- Paper Review: Antropic, Verbalizable Representations Form a Global Workspace in Language Models. ([Link](https://transformer-circuits.pub/2026/workspace/index.html))
-- 2026-08-08
-	- Paper Review: Jared Kaplan et al. Scaling Laws for Neural Language Models.
-
 ## 참고문헌
 
 *(Category Theory)*
@@ -52,6 +49,3 @@ Joy A. Thomas and Thomas M. Cover, Elements of Information Theory
 
 *(Paper Review)*
 Antropic, Verbalizable Representations Form a Global Workspace in Language Models. ([Link](https://transformer-circuits.pub/2026/workspace/index.html))
-Jared Kaplan et al. Scaling Laws for Neural Language Models.
-
-## 참가 문의
