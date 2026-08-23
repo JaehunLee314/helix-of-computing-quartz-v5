@@ -21,7 +21,7 @@ $$
 이제 우리는 manifold의 어느 국소적인 지점에서 quadratic form distance를 사용해 inner-product space를 정의하는 것으로 manifold에서의 metric을 정의할 수 있다. 다시 말하면 manifold에서의 거리 함수의 이차근사로 quadratic form distance를 사용할 수 있다.
 
 $$
-dist_{M}^2 (v, w) = (v-w)^T S(v) (v-w) + o(|v-w|^2)
+\text{dist}_{M}^2 (v, w) = (v-w)^T S(v) (v-w) + o(|v-w|^2)
 $$
 
 다른 표기법으로, manifold $M$의 점 $v$ 주변 국소 좌표계의 미소 변위 성분 $dx_i$들에 대해 line segment $ds$는 다음과 같이 정의된다.
@@ -32,7 +32,7 @@ $$
 
 따라서 $\gamma$는 $x$에서 $y$로 가는 geodesic 이라고 할 때 다음 적분이 $M$의 전역적인 거리로 주어진다.
 
-$$dist_M(x, y) = \int_{\gamma} ds$$
+$$\text{dist}_M(x, y) = \int_{\gamma} ds$$
 
 이와 같은 $S$를 Riemann metric tensor 라고 부른다.
 
@@ -41,6 +41,6 @@ $$dist_M(x, y) = \int_{\gamma} ds$$
 - 통계학에서 covariance matrix의 역행렬을 이용한 quadratic form distance 는 Mahalanobis distance 라고도 한다.
 
 ## References
-(1) Metric tensor, wikipedia (https://en.wikipedia.org/wiki/Metric_tensor)  
-(2) Manifold, wikipedia (https://en.wikipedia.org/wiki/Manifold)
+(1) Wikipedia, Metric tensor (https://en.wikipedia.org/wiki/Metric_tensor)  
+(2) Wikipedia, Manifold (https://en.wikipedia.org/wiki/Manifold)
 

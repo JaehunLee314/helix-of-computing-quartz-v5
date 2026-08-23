@@ -1,5 +1,3 @@
-**Prerequisites:** [[Basics of Leibniz's Notation]]
-
 ## Category of Variables
 
 앞서서 우리는 라이프니츠 표기법에서 변수의 의미를 살펴보았다. 이는 카테고리를 통해 다시 정의할 수 있다. 어떤 변수의 카테고리(category of variables) $V$는 다음과 같이 구성된다.

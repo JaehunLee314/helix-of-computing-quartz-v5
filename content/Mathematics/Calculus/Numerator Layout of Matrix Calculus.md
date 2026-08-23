@@ -45,5 +45,5 @@ $$
 $$
 
 ## References
-(1) Matrix Calculus, Wikipedia (https://en.wikipedia.org/wiki/Matrix_calculus)  
-(2) Jacobian matrix and determinant, Wikipedia (https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant)
+(1) Wikipedia, Matrix Calculus (https://en.wikipedia.org/wiki/Matrix_calculus)  
+(2) Wikipedia, Jacobian matrix and determinant (https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant)
