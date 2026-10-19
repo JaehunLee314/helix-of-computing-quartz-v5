@@ -7,8 +7,8 @@ $$
 \bar{X} = \frac{1}{N} \sum_{i} X_i
 $$
 $$
-S_X = \frac{1}{n-1} \tilde{X}\tilde{X}^T \quad where \quad \tilde{X}
- = (X_1 - \bar{X} \ X_2 - \bar{X}\ \cdots X_n - \bar{X})$$
+S_X = \frac{1}{n-1} \tilde{X}\tilde{X}^T \quad where \quad \tilde{X} = (X_1 - \bar{X} \ X_2 - \bar{X}\ \cdots X_n - \bar{X})
+$$
 
 만약 $\bar{X} = 0$이면 sample variance는 간단하게 다음과 같이 적을 수 있다.
 
