@@ -26,7 +26,7 @@ $$
 
 $$
 \frac{dz}{dx} = \frac{d}{dx}(x + 2y) = 1 + 2\frac{dy}{dx} = 1 + 2 \cdot \frac{1}{2\sqrt x} = 1 + \frac{1}{\sqrt x}
-$$ $$
+$$$$
 \frac{dz}{dy} = \frac{d}{dy}(x + 2y) = \frac{dx}{dy} + 2 = 2y + 2
 $$
 
