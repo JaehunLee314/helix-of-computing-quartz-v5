@@ -26,7 +26,8 @@ $$
 
 $$
 \frac{dz}{dx} = \frac{d}{dx}(x + 2y) = 1 + 2\frac{dy}{dx} = 1 + 2 \cdot \frac{1}{2\sqrt x} = 1 + \frac{1}{\sqrt x}
-$$$$
+$$
+$$
 \frac{dz}{dy} = \frac{d}{dy}(x + 2y) = \frac{dx}{dy} + 2 = 2y + 2
 $$
 
@@ -170,7 +171,9 @@ $$
 
 ($\Delta y \neq 0$이면 $\eta = \epsilon_y / |\Delta y|$이고, $\Delta y = 0$이면 $\Delta z = 0$이므로 $\epsilon_y = 0$이 되어 $\eta = 0$으로 둘 수 있다.) 한편 $\Delta x \to 0$이면 $\Delta y = \frac{\partial y}{\partial x} \Delta x + \epsilon_x \to 0$이고, 따라서 일차근사의 성질에 의해 $\eta \to 0$이다. 그러므로 다음이 성립한다.
 
-$$ \lim_{\Delta x \to 0} \left| \frac{\epsilon_y}{\Delta x} \right| = \lim_{\Delta x \to 0} |\eta| \left| \frac{\Delta y}{\Delta x} \right| = 0 \times \left| \frac{\partial y}{\partial x} \right| = 0 $$
+$$ 
+\lim_{\Delta x \to 0} \left| \frac{\epsilon_y}{\Delta x} \right| = \lim_{\Delta x \to 0} |\eta| \left| \frac{\Delta y}{\Delta x} \right| = 0 \times \left| \frac{\partial y}{\partial x} \right| = 0 
+$$
 
 결과적으로 $\Delta x \to 0$일 때 우변의 두 오차항이 모두 $0$으로 수렴하므로 다음을 얻으며, 이로써 증명이 완료된다.
 
