@@ -9,14 +9,14 @@ $L$이 실수 $a$ 또는 $\pm\infty$일 때 $L$의 $\delta$-근방을 다음과 
 $$
 x \in N_\delta(a) \iff 0 < |x - a| < \delta
 $$
-
 $$
 x \in N_\delta(\infty) \iff x > \frac{1}{\delta}, \quad x \in N_\delta(-\infty) \iff x < -\frac{1}{\delta}
 $$
 
 $f \in O_L(g)$는 $L$ 근처에서 $|f|$가 $|g|$의 상수배보다 크지 않다는 뜻이다.
 
-**정의. Big-O Notation** 함수 $f, g$에 대해 다음과 같이 정의한다.
+**정의. Big-O Notation** 
+함수 $f, g$에 대해 다음과 같이 정의한다.
 
 $$
 f \in O_L(g) \iff \exists C > 0, \exists \delta > 0, (x \in N_\delta(L) \to |f(x)| \leq C|g(x)|)
@@ -24,7 +24,8 @@ $$
 
 첨자를 생략하면 $L = \infty$이다. 즉 $O(g) = O_\infty(g)$ 이다.
 
-**정의. 변수를 사용한 Big-O Notation** $x$에 대한 식 $f(x), g(x)$에 대해 다음과 같이 정의한다.
+**정의. 변수를 사용한 Big-O Notation** 
+$x$에 대한 식 $f(x), g(x)$에 대해 다음과 같이 정의한다.
 
 $$
 f(x) \in \underset{x \to L}O (g(x)) \iff f \in O_L(g)
@@ -36,7 +37,8 @@ $$
 
 ## Big-Omega & Big-Theta Notation
 
-**정의. Big-Omega Notation** 함수 $f, g$에 대해 다음과 같이 정의한다.
+**정의. Big-Omega Notation** 
+함수 $f, g$에 대해 다음과 같이 정의한다.
 
 $$
 f \in \Omega_L(g) \iff \exists C > 0, \exists \delta > 0, (x \in N_\delta(L) \to |f(x)| \geq C|g(x)|)
@@ -44,16 +46,17 @@ $$
 
 $f \in \Omega_L(g)$는 $g \in O_L(f)$와 동치이다.
 
-**정의. Big-Theta Notation** $f \in O_L(g)$이고 $f \in \Omega_L(g)$이면 $f \in \Theta_L(g)$라고 적는다.
+**정의. Big-Theta Notation** 
+$f \in O_L(g)$이고 $f \in \Omega_L(g)$이면 $f \in \Theta_L(g)$라고 적는다.
 
 두 경우 모두 첨자를 생략하면 $L = \infty$이다.
 
-**정의. 변수를 사용한 Big-Omega, Big-Theta Notation** $x$에 대한 식 $f(x), g(x)$에 대해 다음과 같이 정의한다.
+**정의. 변수를 사용한 Big-Omega, Big-Theta Notation** 
+$x$에 대한 식 $f(x), g(x)$에 대해 다음과 같이 정의한다.
 
 $$
 f(x) \in \underset{x \to L}\Omega (g(x)) \iff f \in \Omega_L(g)
 $$
-
 $$
 f(x) \in \underset{x \to L}\Theta (g(x)) \iff f \in \Theta_L(g)
 $$
@@ -64,7 +67,8 @@ $$
 
 $f \in o_L(g)$는 $x$가 $L$에 가까워질 때 $f$가 $g$에 비해 무시할 수 있을 만큼 작아진다는 뜻이다.
 
-**정의. Little-o Notation** 함수 $f, g$에 대해 다음과 같이 정의한다.
+**정의. Little-o Notation** 
+함수 $f, g$에 대해 다음과 같이 정의한다.
 
 $$
 f \in o_L(g) \iff \epsilon > 0 \to \exists \delta > 0, (x \in N_\delta(L) \to |f(x)| \leq \epsilon|g(x)|)
@@ -72,7 +76,8 @@ $$
 
 첨자를 생략하면 $L = 0$이다. 즉 $o(g) = o_0(g)$ 이다.
 
-**정의. 변수를 사용한 Little-o Notation** $x$에 대한 식 $f(x), g(x)$에 대해 다음과 같이 정의한다.
+**정의. 변수를 사용한 Little-o Notation** 
+$x$에 대한 식 $f(x), g(x)$에 대해 다음과 같이 정의한다.
 
 $$
 f(x) \in \underset{x \to L}o (g(x)) \iff f \in o_L(g)
@@ -99,7 +104,6 @@ $\mathcal{X}$가 $O, \Omega, \Theta, o$ 중 하나라고 하자. 식 안에서 �
 $$
 f = g + \mathcal{X}_L(h) \iff \exists e \in \mathcal{X}_L(h), f = g + e
 $$
-
 $$
 f(x) = g(x) + \underset{x \to L}{\mathcal{X}} (h(x)) \iff \exists e(x) \in \underset{x \to L}{\mathcal{X}} (h(x)), f(x) = g(x) + e(x)
 $$
@@ -135,7 +139,6 @@ _증명._ $M > 0$이라고 하자. 각각 다음 부등식에서 따른다. $\d
 2. $|b e| \leq M \cdot \frac{\epsilon}{M}|g| = \epsilon|g|$
 3. $|e_1 e_2| \leq \epsilon|f| \cdot 1|g| = \epsilon|fg|$
 4. $|e| \leq \frac{\epsilon}{M}|g| \leq \epsilon|h|$
-
 $\blacksquare$
 
 **예시.** $x \in O_{x \to 0}(1)$ 이므로, 성질 4에 의해 $e(x) \in o_{x \to 0}(x) \to e(x) \in o_{x \to 0}(1)$ 이다.
