@@ -9,11 +9,18 @@ $L$이 실수 $a$ 또는 $\pm\infty$일 때 $L$의 $\delta$-근방을 다음과 
 $$
 x \in N_\delta(a) \iff 0 < |x - a| < \delta
 $$
+
 $$
 x \in N_\delta(\infty) \iff x > \frac{1}{\delta}, \quad x \in N_\delta(-\infty) \iff x < -\frac{1}{\delta}
 $$
 
 $f \in O_L(g)$는 $L$ 근처에서 $|f|$가 $|g|$의 상수배보다 크지 않다는 뜻이다.
+
+$x, a \in \mathbb{R}^n$이면 근방을 노름으로 정의하고, 값이 벡터인 함수에 대해서는 $|f(x)|$를 $\lVert f(x) \rVert$로 바꾼다.
+
+$$
+x \in N_\delta(a) \iff 0 < \lVert x - a \rVert < \delta
+$$
 
 **정의. Big-O Notation** 
 함수 $f, g$에 대해 다음과 같이 정의한다.
@@ -57,6 +64,7 @@ $x$에 대한 식 $f(x), g(x)$에 대해 다음과 같이 정의한다.
 $$
 f(x) \in \underset{x \to L}\Omega (g(x)) \iff f \in \Omega_L(g)
 $$
+
 $$
 f(x) \in \underset{x \to L}\Theta (g(x)) \iff f \in \Theta_L(g)
 $$
@@ -92,7 +100,6 @@ $$
 특히 $f \in o_L(1)$은 $\lim_{x \to L} f(x) = 0$과 같다.
 
 **예시.**
-
 - $x^2 \in o_{x \to 0}(x)$
 - $\frac{1}{x} \in o_{x \to \infty}(1)$
 - $x \in o_{x \to \infty}(x^2)$
@@ -104,6 +111,7 @@ $\mathcal{X}$가 $O, \Omega, \Theta, o$ 중 하나라고 하자. 식 안에서 �
 $$
 f = g + \mathcal{X}_L(h) \iff \exists e \in \mathcal{X}_L(h), f = g + e
 $$
+
 $$
 f(x) = g(x) + \underset{x \to L}{\mathcal{X}} (h(x)) \iff \exists e(x) \in \underset{x \to L}{\mathcal{X}} (h(x)), f(x) = g(x) + e(x)
 $$
@@ -121,29 +129,6 @@ $$
 $$
 
 **예시.** $(x + 1)^2 = x^2 + O_{x \to \infty}(x)$ 이다.
-
-## Little-o Notation의 성질
-
-**정리. Little-o의 기본 성질** 이 절의 little-o는 모두 같은 $L$에서의 것이므로 $o_L$을 $o$로 줄여 적는다.
-
-1. $e_1, e_2 \in o(g) \to e_1 + e_2 \in o(g)$
-2. $L$ 근처에서 $|b(x)| \leq M$ 이면 $e \in o(g) \to b e \in o(g)$
-3. $e_1 \in o(f), e_2 \in o(g) \to e_1 e_2 \in o(fg)$
-4. $L$ 근처에서 $|g(x)| \leq M|h(x)|$ 이면 $e \in o(g) \to e \in o(h)$
-
-성질 2와 4의 조건은 각각 $b \in O_L(1)$, $g \in O_L(h)$ 이다.
-
-_증명._ $M > 0$이라고 하자. 각각 다음 부등식에서 따른다. $\delta$는 관련된 $\delta$들 중 가장 좁은 근방을 주는 것으로 잡는다.
-
-1. $|e_1 + e_2| \leq \frac{\epsilon}{2}|g| + \frac{\epsilon}{2}|g| = \epsilon|g|$
-2. $|b e| \leq M \cdot \frac{\epsilon}{M}|g| = \epsilon|g|$
-3. $|e_1 e_2| \leq \epsilon|f| \cdot 1|g| = \epsilon|fg|$
-4. $|e| \leq \frac{\epsilon}{M}|g| \leq \epsilon|h|$
-$\blacksquare$
-
-**예시.** $x \in O_{x \to 0}(1)$ 이므로, 성질 4에 의해 $e(x) \in o_{x \to 0}(x) \to e(x) \in o_{x \to 0}(1)$ 이다.
-
-**예시.** $f(x) = g(x) + o_{x \to L}(h(x))$ 이고 $g(x) = k(x) + o_{x \to L}(h(x))$ 이면 $f(x) = k(x) + o_{x \to L}(h(x))$ 이다. $f = g + e_1$, $g = k + e_2$ 이면 $f = k + (e_1 + e_2)$ 이고, 성질 1에 의해 $e_1 + e_2 \in o_L(h)$ 이기 때문이다.
 
 ## 참고문헌
 (1) Kenneth Rosen, Discrete Mathematics and Its Applications 

@@ -32,7 +32,9 @@ $$
 
 따라서 $\gamma$는 $x$에서 $y$로 가는 geodesic 이라고 할 때 다음 적분이 $M$의 전역적인 거리로 주어진다.
 
-$$\text{dist}_M(x, y) = \int_{\gamma} ds$$
+$$
+\text{dist}_M(x, y) = \int_{\gamma} ds
+$$
 
 이와 같은 $S$를 Riemann metric tensor 라고 부른다.
 
