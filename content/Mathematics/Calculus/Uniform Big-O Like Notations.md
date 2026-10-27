@@ -5,25 +5,24 @@
 ## Uniform Big-O Like Notation
 
 **정의. Uniform Big-O Like Notation** 
-집합 $P$와 함수 $e(p, s), g(p, s)$에 대해 다음과 같이 정의한다.
+집합 $P$와 함수 $f(p, s), g(p, s)$에 대해 다음과 같이 정의한다.
 
 $$
-e \in o_{P, L}(g) \iff \epsilon > 0 \to \exists \delta > 0, (p \in P, s \in N_\delta(L) \to |e(p, s)| \leq \epsilon|g(p, s)|)
+f \in o_{P, L}(g) \iff \epsilon > 0 \to \exists \delta > 0, (p \in P, s \in N_\delta(L) \to |f(p, s)| \leq \epsilon|g(p, s)|)
+$$
+$$
+f \in O_{P, L}(g) \iff \exists C > 0, \exists \delta > 0, (p \in P, s \in N_\delta(L) \to |f(p, s)| \leq C|g(p, s)|)
 $$
 
-$$
-e \in O_{P, L}(g) \iff \exists C > 0, \exists \delta > 0, (p \in P, s \in N_\delta(L) \to |e(p, s)| \leq C|g(p, s)|)
-$$
+$\Omega_{P, L}, \Theta_{P, L}$도 같은 방식으로 정의한다. $f$가 정의된 $(p, s)$만 생각하고, $L = 0$이면 $L$을 생략하여 $o_P$와 같이 적는다. $P$는 $\mathbb{R}^n$의 부분집합처럼 임의의 집합일 수 있고, $s \in \mathbb{R}^n$이면 근방은 노름으로 정의한다.
 
-$\Omega_{P, L}, \Theta_{P, L}$도 같은 방식으로 정의한다. $e$가 정의된 $(p, s)$만 생각하고, $L = 0$이면 $L$을 생략하여 $o_P$와 같이 적는다. $P$는 $\mathbb{R}^n$의 부분집합처럼 임의의 집합일 수 있고, $s \in \mathbb{R}^n$이면 근방은 노름으로 정의한다.
-
-각 $p$를 고정하여 $e(p, \cdot) \in o_L(g(p, \cdot))$ 인 것과 비교하면 양화사의 순서만 다르다. 각 $p$에서의 경우는 $p$가 주어진 뒤 $\delta$를 고르므로 $\delta$가 $p$에 의존할 수 있지만, 균등한 경우는 $\delta$를 고른 뒤 $p$가 주어지므로 $\delta$가 $p$에 의존할 수 없다.
+각 $p$를 고정하여 $f(p, \cdot) \in o_L(g(p, \cdot))$ 인 것과 비교하면 양화사의 순서만 다르다. 각 $p$에서의 경우는 $p$가 주어진 뒤 $\delta$를 고르므로 $\delta$가 $p$에 의존할 수 있지만, 균등한 경우는 $\delta$를 고른 뒤 $p$가 주어지므로 $\delta$가 $p$에 의존할 수 없다.
 
 **정의. 변수를 사용한 Uniform Big-O Like Notation** 
-$p, s$에 대한 식 $e(p, s), g(p, s)$에 대해 다음과 같이 정의한다.
+$p, s$에 대한 식 $f(p, s), g(p, s)$에 대해 다음과 같이 정의한다.
 
 $$
-e(p, s) \in \underset{p \in P, s \to L}o (g(p, s)) \iff e \in o_{P, L}(g)
+f(p, s) \in \underset{p \in P, s \to L}o (g(p, s)) \iff f \in o_{P, L}(g)
 $$
 
 한 줄로 적을 때는 $o_{p \in P, s \to L}(g(p, s))$와 같이 쓴다. $O, \Omega, \Theta$도 같다. 식 안에서 쓰는 경우도 [[Big-O Like Notations]]와 같이 해석한다.
@@ -41,15 +40,15 @@ $$
 집합 안의 두 점이 위치와 무관하게 가까워지는 경우는 자주 쓰이므로 따로 표기한다.
 
 **정의. 두 점 표기** 
-$I \subset \mathbb{R}^n$와 $x, y \in I$에 대한 식 $e(x, y), g(x, y)$에 대해 다음과 같이 정의한다.
+$I \subset \mathbb{R}^n$와 $x, y \in I$에 대한 식 $f(x, y), g(x, y)$에 대해 다음과 같이 정의한다.
 
 $$
-e(x, y) \in \underset{x, y \in I}o (g(x, y)) \iff e(x, x + s) \in \underset{x \in I, s \to 0}o (g(x, x + s))
+f(x, y) \in \underset{x, y \in I}o (g(x, y)) \iff f(x, x + s) \in \underset{x \in I, s \to 0}o (g(x, x + s))
 $$
 
 여기서 $x + s \in I$인 $s$만 생각한다. $O, \Omega, \Theta$도 같다.
 
-이 정의는 거리 $\lVert y - x \rVert$가 작은 모든 쌍 $x, y \in I$에 대한 조건이므로 $x, y$는 대칭이다. 즉 $e(x, y) \in o_{x, y \in I}(g(x, y))$ 이면 $e(y, x) \in o_{x, y \in I}(g(y, x))$ 이다.
+이 정의는 거리 $\lVert y - x \rVert$가 작은 모든 쌍 $x, y \in I$에 대한 조건이므로 $x, y$는 대칭이다. 즉 $f(x, y) \in o_{x, y \in I}(g(x, y))$ 이면 $f(y, x) \in o_{x, y \in I}(g(y, x))$ 이다.
 
 ## 균등연속
 
