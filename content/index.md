@@ -5,7 +5,7 @@ title: Welcome to "Helix of Computing"!
 
 Helix of Computing is a blog about computational learning and related topics. Use the Explorer on the left to browse by subject.
 
-I'm an undergraduate in the (Department of Applied Artificial Intelligence at SeoulTech)[https://aai.seoultech.ac.kr/]. You can find more about me on [LinkedIn](https://www.linkedin.com/in/jaehun-lee-852014280/) and [GitHub](https://github.com/JaehunLee314).
+I'm an undergraduate in the [Department of Applied Artificial Intelligence at SeoulTech](https://aai.seoultech.ac.kr/). You can find more about me on [LinkedIn](https://www.linkedin.com/in/jaehun-lee-852014280/) and [GitHub](https://github.com/JaehunLee314).
 
 If you spot an error or have a suggestion, I'd love to hear from you at jhlee314159@gmail.com
 
