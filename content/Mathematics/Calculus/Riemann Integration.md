@@ -12,7 +12,7 @@ $$
 e_i = A(x_i, x_{i+1}) - f(t_i)h_i
 $$
 
-가법성에 의해 실제 넓이는 직사각형 넓이의 합과 오차의 합으로 정확히 나뉜다.
+가법성에 의해 실제 넓이는 직사각형 넓이의 합과 오차의 합으로 나뉜다.
 
 $$
 A(a, b) = \sum_{i=0}^{n-1} f(t_i)h_i + \sum_{i=0}^{n-1} e_i
@@ -147,8 +147,6 @@ $\Delta y$의 합은 $F(b) - F(a)$이고, $F$가 $C^1$이면 $dy$와의 차이�
 $$
 \int_a^b dy = F(b) - F(a)
 $$
-
-$dy$를 $dx$에 대한 선형함수로 보는 관점은 미분형식(differential form)으로 이어진다(참고문헌 (2)).
 
 ## 참고문헌
 (1) Walter Rudin, Principles of Mathematical Analysis  

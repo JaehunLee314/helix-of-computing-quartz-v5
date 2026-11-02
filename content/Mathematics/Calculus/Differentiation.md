@@ -54,7 +54,6 @@ _증명._ $u(x+h) = u(x) + u'(x)h + e_1(h)$, $v(x+h) = v(x) + v'(x)h + e_2(h)$ �
 $$
 u(x+h)v(x+h) = u(x)v(x) + \big(u(x)v'(x) + u'(x)v(x)\big)h + r(h)
 $$
-
 $$
 r(h) = u'(x)v'(x)h^2 + \big(u(x) + u'(x)h\big)e_2(h) + \big(v(x) + v'(x)h\big)e_1(h) + e_1(h)e_2(h)
 $$

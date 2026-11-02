@@ -25,7 +25,7 @@ $$
 
 균등성에 의해 $0 < |s| < \delta$ 이면 $x$와 무관하게 $|e(x, s)| \leq \epsilon|s|$ 이므로, 우변의 절댓값은 $\epsilon|s|(b - a)$ 이하이다. 따라서 우변은 $o_{s \to 0}(s)$ 이다. $\blacksquare$
 
-이는 [[Riemann Integration]]의 균등오차의 소거와 같은 구조이다. 거기서는 분할된 조각들에 대해 오차를 더했고, 여기서는 $x$에 대해 오차를 적분한다.
+이는 [[Riemann Integration]]의 균등오차의 소거와 같은 논리이다.
 
 **따름정리.** 
 $f$와 $\frac{\partial f}{\partial t}$가 $[a, b] \times [c, d]$에서 연속이면 $t \in [c, d]$에서 다음이 성립한다.
@@ -64,7 +64,6 @@ $$
 _증명._ $G(u, v, t) = \int_u^v f(x, t)dx$ 라고 하면 미적분학의 기본정리 2에 의해 $D_1 G = -f(u, t)$, $D_2 G = f(v, t)$ 이고, 위의 따름정리에 의해 $D_3 G = \int_u^v \frac{\partial f}{\partial t}dx$ 이다. 세 편도함수가 연속이므로 $G$는 미분가능하고, 다변수 연쇄법칙을 적용한다. $\blacksquare$
 
 ## 더 일반적인 경우
-
 - 적분 구간이 무한하거나 이상적분인 경우, 위의 조건에 더해 $\int \frac{\partial f}{\partial t}(x, t)dx$가 $t$에 대해 균등하게 수렴해야 한다.
 
 ## 참고문헌

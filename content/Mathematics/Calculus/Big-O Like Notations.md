@@ -1,26 +1,27 @@
 **Prerequisites**: [[Intuition for Variable]]
 
-Big-O like notation은 두 함수 $f, g$를 비교하는 표기법이다. 함수를 사용한 형태 $f \in O(g)$와 변수를 사용한 형태 $f(x) \in O(g(x))$로 적을 수 있다.
+Big-O like notation은 두 함수 $f, g$의 점근적 크기를 비교하는 표기법이다.
 
-## Big-O Notation
+## Neighborhood
 
 $L$이 실수 $a$ 또는 $\pm\infty$일 때 $L$의 $\delta$-근방을 다음과 같이 정의한다.
 
 $$
 x \in N_\delta(a) \iff 0 < |x - a| < \delta
 $$
-
 $$
 x \in N_\delta(\infty) \iff x > \frac{1}{\delta}, \quad x \in N_\delta(-\infty) \iff x < -\frac{1}{\delta}
 $$
 
-$f \in O_L(g)$는 $L$ 근처에서 $|f|$가 $|g|$의 상수배보다 크지 않다는 뜻이다.
-
-$x, a \in \mathbb{R}^n$이면 근방을 노름으로 정의하고, 값이 벡터인 함수에 대해서는 $|f(x)|$를 $\lVert f(x) \rVert$로 바꾼다.
+물론, $x, a \in \mathbb{R}^n$이면 근방을 norm으로 정의한다.
 
 $$
 x \in N_\delta(a) \iff 0 < \lVert x - a \rVert < \delta
 $$
+
+## Big-O Notation
+
+$f \in O_L(g)$는 $L$ 근처에서 $|f|$가 $|g|$의 상수배보다 크지 않다는 뜻이다.
 
 **정의. Big-O Notation** 
 함수 $f, g$에 대해 다음과 같이 정의한다.
@@ -111,7 +112,6 @@ $\mathcal{X}$가 $O, \Omega, \Theta, o$ 중 하나라고 하자. 식 안에서 �
 $$
 f = g + \mathcal{X}_L(h) \iff \exists e \in \mathcal{X}_L(h), f = g + e
 $$
-
 $$
 f(x) = g(x) + \underset{x \to L}{\mathcal{X}} (h(x)) \iff \exists e(x) \in \underset{x \to L}{\mathcal{X}} (h(x)), f(x) = g(x) + e(x)
 $$

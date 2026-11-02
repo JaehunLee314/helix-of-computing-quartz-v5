@@ -1,6 +1,6 @@
 **Prerequisites:** [[Big-O Like Notations]], [[Uniform Big-O Like Notations]]
 
-이 문서의 표기는 모두 같은 $L$에서의 것이므로 첨자를 생략하여 $O, o$로 적는다.
+이 문서의 표기는 모두 같은 $L$을 가정하므로 첨자를 생략하여 $O, o$로 적는다.
 
 ## Little-o의 성질
 
