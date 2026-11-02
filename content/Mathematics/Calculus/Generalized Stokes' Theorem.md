@@ -141,46 +141,66 @@ $$
 
 ## Applications
 
-앞선 정리는 벡터 미적분학의 중요한 정리 대부분을 일관되게 설명한다. $\mathbb{R}^3$에서 form과 벡터 미적분학의 대상은 다음과 같이 대응한다.
+$\mathbb{R}^3$에서 form과 벡터 미적분학의 개념은 다음과 같이 대응된다.
 
-|form|대응하는 대상|적분의 의미|$d$의 의미|
-|---|---|---|---|
-|0-form $f$|함수|점에서의 값|gradient $\nabla f$|
-|1-form $F_1 dx + F_2 dy + F_3 dz$|벡터장 $F$|일(work) $\int F \cdot d\mathbf{r}$|curl $\nabla \times F$|
-|2-form $F_1 dy \wedge dz + F_2 dz \wedge dx + F_3 dx \wedge dy$|벡터장 $F$|유량(flux) $\iint F \cdot \mathbf{n} dA$|divergence $\nabla \cdot F$|
-|3-form $g dx \wedge dy \wedge dz$|밀도 함수 $g$|총량 $\iiint g dV$|(항상 0)|
+| form $w$                                                        | $\int w$에 대응되는 개념                      | $dw$에 대응되는 개념               |
+| --------------------------------------------------------------- | -------------------------------------- | --------------------------- |
+| 0-form $f$                                                      | 점에서의 값                                 | gradient $\nabla f$         |
+| 1-form $F_1 dx + F_2 dy + F_3 dz$                               | 일(work) $\int F \cdot d\mathbf{r}$     | curl $\nabla \times F$      |
+| 2-form $F_1 dy \wedge dz + F_2 dz \wedge dx + F_3 dx \wedge dy$ | 유량(flux) $\iint F \cdot \mathbf{n} dA$ | divergence $\nabla \cdot F$ |
+| 3-form $g dx \wedge dy \wedge dz$                               | 총량 $\iiint g dV$                       | 0                           |
 
-이 대응 아래에서 generalized Stokes' theorem 하나가 다음 정리들이 된다.
-
-**미적분학의 기본정리.** $M = [a, b]$, $\omega = f$인 경우이다. $\partial M$은 "$b$에 $+$, $a$에 $-$"이므로
+이를 바탕으로 generalized Stokes' theorem은 벡터 미적분학의 정리들을 하나의 원리로 설명한다. 이하에서 벡터장 $F = (F_1, F_2, F_3)$에 대해 일과 유량으로 해석할 수 있는 다음의 미분형식들을 사용한다.
 
 $$
-\int_a^b f'(x) dx = f(b) - f(a).
+\omega_F = F_1 dx + F_2 dy + F_3 dz, \qquad \eta_F = F_1 dy \wedge dz + F_2 dz \wedge dx + F_3 dx \wedge dy
 $$
 
-**선적분의 기본정리 (gradient theorem).** $M$이 $a$에서 $b$로 가는 곡선 $C$이고 $\omega = f$인 경우이다.
+**미적분학의 기본정리.**
 
-$$
-\int_C \nabla f \cdot d\mathbf{r} = f(b) - f(a)
-$$
+$$\int_a^b f'(x) dx = \int_{[a,b]} df = \int_{\partial [a,b]} f = f(b) - f(a)$$
 
-**Green 정리.** $M$이 평면 영역 $D$이고 $\omega = P dx + Q dy$인 경우이다.
+$f'(x) dx$는 1-form $df$를 1차원에서 쓴 것이다. 구간 $[a, b]$의 경계는 두 점이고, 유도된 방향은 끝점 $b$에서 $+$, 시작점 $a$에서 $-$이다. 점 위의 적분은 그 점에서의 값을 부호와 함께 더하는 것이므로 식이 유도된다. 직관적으로는, 구간을 잘게 나눈 조각마다 $f$의 증가량을 더하면 내부의 점은 한 조각의 끝점이자 다음 조각의 시작점이어서 상쇄되고 양 끝만 남는다.
 
-$$
-\oint_{\partial D} P dx + Q dy = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dA
-$$
+**선적분의 기본정리 (gradient theorem).** 곡선 $C$가 점 $a$에서 $b$까지 간다고 하자. 
 
-**(고전적) Stokes 정리.** $M$이 $\mathbb{R}^3$ 안의 곡면 $S$이고 $\omega$가 1-form인 경우이다.
+$$\int_C \nabla f \cdot d\mathbf{r} = \int_C \left( \frac{\partial f}{\partial x} dx + \frac{\partial f}{\partial y} dy + \frac{\partial f}{\partial z} dz \right) = \int_C df = \int_{\partial C} f = f(b) - f(a)$$
 
-$$
-\oint_{\partial S} F \cdot d\mathbf{r} = \iint_S (\nabla \times F) \cdot \mathbf{n} dA
-$$
+결과가 양 끝점에만 의존하므로 gradient 장의 선적분은 경로에 무관하다.
 
-**발산 정리 (Gauss 정리).** $M$이 $\mathbb{R}^3$ 안의 입체 $V$이고 $\omega$가 2-form인 경우이다.
+**Green 정리.** 먼저 $d(P dx + Q dy)$를 계산한다. $dx \wedge dx = dy \wedge dy = 0$, $dy \wedge dx = -dx \wedge dy$를 쓰면
 
-$$
-\iint_{\partial V} F \cdot \mathbf{n} dA = \iiint_V \nabla \cdot F dV
-$$
+$$d(P dx + Q dy) = dP \wedge dx + dQ \wedge dy = \frac{\partial P}{\partial y} dy \wedge dx + \frac{\partial Q}{\partial x} dx \wedge dy = \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx \wedge dy$$
+
+이다. 평면의 표준 방향에서 $dx \wedge dy$는 넓이 $dA$이므로
+
+$$\iint_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dA = \int_D d(P dx + Q dy) = \int_{\partial D} P dx + Q dy = \oint_{\partial D} P dx + Q dy$$
+
+$\partial D$는 반시계 방향의 경계이다. 직관적으로, 영역을 작은 정사각형으로 나누어 각 정사각형의 둘레 순환을 모두 더하면 이웃한 정사각형이 공유하는 변은 반대 방향으로 두 번 지나므로 상쇄되고, 바깥 둘레만 남는다.
+
+**(고전적) Stokes 정리.** 먼저 $d\omega_F$를 계산한다. $d(F_1 dx) = dF_1 \wedge dx$에서 $dx$를 포함한 항은 사라지므로
+
+$$d(F_1 dx) = \frac{\partial F_1}{\partial y} dy \wedge dx + \frac{\partial F_1}{\partial z} dz \wedge dx = -\frac{\partial F_1}{\partial y} dx \wedge dy + \frac{\partial F_1}{\partial z} dz \wedge dx$$
+
+이고, $F_2 dy$, $F_3 dz$도 같은 방법으로 계산해 모으면
+
+$$d\omega_F = \left( \frac{\partial F_3}{\partial y} - \frac{\partial F_2}{\partial z} \right) dy \wedge dz + \left( \frac{\partial F_1}{\partial z} - \frac{\partial F_3}{\partial x} \right) dz \wedge dx + \left( \frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} \right) dx \wedge dy = \eta_{\nabla \times F}$$
+
+이다. 한편 곡면 위의 평행사변형 $(u, v)$에 대해 $\eta_G(u, v) = G \cdot (u \times v)$이고 $u \times v$는 법선 $\mathbf{n}$ 방향에 크기가 넓이이므로, 곡면 위에서 $\eta_G$를 적분하면 $\iint_S G \cdot \mathbf{n} dA$가 된다. 따라서
+
+$$\iint_S (\nabla \times F) \cdot \mathbf{n} dA = \int_S \eta_{\nabla \times F} = \int_S d\omega_F = \int_{\partial S} \omega_F = \oint_{\partial S} F \cdot d\mathbf{r}$$
+
+Green 정리는 곡면이 $xy$평면에 놓인 특수한 경우이다. 곡면이 휘어 있어도 작은 고리들의 순환을 더하면 내부의 변이 상쇄된다는 논리는 같다.
+
+**발산 정리 (Gauss 정리).** 먼저 $d\eta_F$를 계산한다. $d(F_1 dy \wedge dz) = dF_1 \wedge dy \wedge dz$에서 $dy$나 $dz$가 두 번 나오는 항은 사라지므로 $\frac{\partial F_1}{\partial x} dx \wedge dy \wedge dz$만 남는다. 나머지 두 항도 마찬가지이며, $dy \wedge dz \wedge dx$와 $dz \wedge dx \wedge dy$는 $dx \wedge dy \wedge dz$의 순서를 순환시킨 것이라 부호가 바뀌지 않는다. 따라서
+
+$$d\eta_F = \left( \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z} \right) dx \wedge dy \wedge dz = (\nabla \cdot F) dx \wedge dy \wedge dz$$
+
+이다. $dx \wedge dy \wedge dz$는 부피 $dV$이므로
+
+$$\iiint_V \nabla \cdot F dV = \int_V d\eta_F = \int_{\partial V} \eta_F = \iint_{\partial V} F \cdot \mathbf{n} dA$$
+
+$\partial V$에는 바깥을 향하는 법선을 준다. 직관적으로, 입체를 작은 상자로 나누어 각 상자에서 빠져나가는 유량을 모두 더하면 이웃한 상자가 공유하는 면에서는 한쪽에서 나간 양이 다른 쪽으로 들어온 양이므로 상쇄되고, 바깥 표면을 통과하는 유량만 남는다.
 
 ### 예: 원판의 넓이
 
