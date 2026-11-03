@@ -1,0 +1,103 @@
+**Prerequisites:** [[Differential Form]], [[Uniform Big-O Like Notations]]
+
+이 글에서는 generalized Stokes' theorem의 개요를 살펴본다.
+
+## Stokes' Theorem
+
+Generalized Stokes' theorem은 다음과 같다.
+
+**정리. Generalized Stokes' Theorem** $M$을 경계 $\partial M$을 가지는 방향 지어진(oriented) 콤팩트 $n$차원 다양체라 하고, $\partial M$에는 유도된 방향을 준다. $M$ 위의 매끄러운 $(n-1)$-form $\omega$에 대해 다음이 성립한다.
+
+$$ \int_{\partial M} \omega = \int_M d\omega $$
+
+[[Differential Form]]에서 본 exterior derivative의 정의를 받아들이면 이 정리는 어느정도 직관적이다.
+
+1. $M$을 작은 평행체들로 분할한다. 조각의 변의 길이의 최댓값을 $U$라 하면 조각의 개수는 대략 $U^{-n}$에 비례한다.
+2. 각 평행체에서 $d\omega$의 값은 정의에 의해 그 평행체의 경계를 $\omega$로 잰 값과 일차근사 수준에서 같다. 따라서 $\int_M d\omega \approx \sum_{c} \int_{\partial c} \omega$이다. ($c$는 분할의 각 조각)
+3. 내부의 면은 이웃한 두 조각에 서로 반대 방향으로 한 번씩 속하므로 그 값이 상쇄된다. 남는 것은 어느 조각과도 공유되지 않는 면, 즉 $M$의 경계 $\partial M$을 이루는 면뿐이다.
+4. 남은 것은 2에서 생긴 오차의 합이다. 조각 하나의 오차는 $o(U^n)$인데, $M$이 콤팩트이고 $\omega$가 매끄러우면 하이네-칸토어 정리에 의해 이 오차는 점 $p$에 대해 균등하다. 즉 $\underset{p \in M, U \to 0}o (U^n)$이다. 따라서 약 $U^{-n}$개의 오차를 모두 더해도 $U^{-n} \cdot o(U^n) = o(1)$이 되어, 분할을 잘게 하는 극한에서 근사가 정확해진다. 오차가 위치마다 다른 속도로 작아진다면 이 논증은 성립하지 않는다.
+
+즉 exterior derivative는 "아주 작은 조각에서 Stokes 정리가 성립하도록" 정의된 것이고, generalized Stokes' theorem은 그것을 적분의 가법성으로 이어 붙인 결과이다.
+
+특히 경계가 없는 다양체($\partial M = \varnothing$, 예를 들어 구면)에서는 항상 $\int_M d\omega = 0$이다.
+
+## Applications
+
+$\mathbb{R}^3$에서 form과 벡터 미적분학의 개념은 다음과 같이 대응된다.
+
+|form $\omega$|$\int \omega$에 대응되는 개념|$d\omega$에 대응되는 개념|
+|---|---|---|
+|0-form $f$|점에서의 값|gradient $\nabla f$|
+|1-form $F_1 dx + F_2 dy + F_3 dz$|일(work) $\int F \cdot d\mathbf{r}$|curl $\nabla \times F$|
+|2-form $F_1 dy \wedge dz + F_2 dz \wedge dx + F_3 dx \wedge dy$|유량(flux) $\iint F \cdot \mathbf{n} dA$|divergence $\nabla \cdot F$|
+|3-form $g dx \wedge dy \wedge dz$|총량 $\iiint g dV$|0|
+
+이를 바탕으로 generalized Stokes' theorem은 벡터 미적분학의 정리들을 하나의 원리로 설명한다. 이하에서 벡터장 $F = (F_1, F_2, F_3)$에 대해 일과 유량으로 해석할 수 있는 다음의 미분형식들을 사용한다.
+
+$$ \omega_F = F_1 dx + F_2 dy + F_3 dz, \qquad \eta_F = F_1 dy \wedge dz + F_2 dz \wedge dx + F_3 dx \wedge dy $$
+
+**미적분학의 기본정리.**
+
+$$ \int_a^b f'(x) dx = \int_{[a,b]} df = \int_{\partial [a,b]} f = f(b) - f(a) $$
+
+$f'(x) dx$는 1-form $df$를 1차원에서 쓴 것이다. 구간 $[a, b]$의 경계는 두 점이고, 유도된 방향은 끝점 $b$에서 $+$, 시작점 $a$에서 $-$이다. 점 위의 적분은 그 점에서의 값을 부호와 함께 더하는 것이므로 식이 유도된다. 직관적으로는, 구간을 잘게 나눈 조각마다 $f$의 증가량을 더하면 내부의 점은 한 조각의 끝점이자 다음 조각의 시작점이어서 상쇄되고 양 끝만 남는다.
+
+**선적분의 기본정리 (gradient theorem).** 곡선 $C$가 점 $a$에서 $b$까지 간다고 하자.
+
+$$ \int_C \nabla f \cdot d\mathbf{r} = \int_C \left( \frac{\partial f}{\partial x} dx + \frac{\partial f}{\partial y} dy + \frac{\partial f}{\partial z} dz \right) = \int_C df = \int_{\partial C} f = f(b) - f(a) $$
+
+결과가 양 끝점에만 의존하므로 gradient 장의 선적분은 경로에 무관하다.
+
+**Green 정리.** 먼저 $d(P dx + Q dy)$를 계산한다. $dx \wedge dx = dy \wedge dy = 0$, $dy \wedge dx = -dx \wedge dy$를 쓰면
+
+$$ d(P dx + Q dy) = dP \wedge dx + dQ \wedge dy = \frac{\partial P}{\partial y} dy \wedge dx + \frac{\partial Q}{\partial x} dx \wedge dy = \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx \wedge dy $$
+
+이다. 평면의 표준 방향에서 $dx \wedge dy$는 넓이 $dA$이므로
+
+$$ \iint_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dA = \int_D d(P dx + Q dy) = \int_{\partial D} P dx + Q dy = \oint_{\partial D} P dx + Q dy $$
+
+$\partial D$는 반시계 방향의 경계이다. 직관적으로, 영역을 작은 정사각형으로 나누어 각 정사각형의 둘레 순환을 모두 더하면 이웃한 정사각형이 공유하는 변은 반대 방향으로 두 번 지나므로 상쇄되고, 바깥 둘레만 남는다.
+
+**(고전적) Stokes 정리.** 먼저 $d\omega_F$를 계산한다. $d(F_1 dx) = dF_1 \wedge dx$에서 $dx$를 포함한 항은 사라지므로
+
+$$ d(F_1 dx) = \frac{\partial F_1}{\partial y} dy \wedge dx + \frac{\partial F_1}{\partial z} dz \wedge dx = -\frac{\partial F_1}{\partial y} dx \wedge dy + \frac{\partial F_1}{\partial z} dz \wedge dx $$
+
+이고, $F_2 dy$, $F_3 dz$도 같은 방법으로 계산해 모으면
+
+$$ d\omega_F = \left( \frac{\partial F_3}{\partial y} - \frac{\partial F_2}{\partial z} \right) dy \wedge dz + \left( \frac{\partial F_1}{\partial z} - \frac{\partial F_3}{\partial x} \right) dz \wedge dx + \left( \frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} \right) dx \wedge dy = \eta_{\nabla \times F} $$
+
+이다. 한편 곡면 위의 평행사변형 $(u, v)$에 대해 $\eta_G(u, v) = G \cdot (u \times v)$이고 $u \times v$는 법선 $\mathbf{n}$ 방향에 크기가 넓이이므로, 곡면 위에서 $\eta_G$를 적분하면 $\iint_S G \cdot \mathbf{n} dA$가 된다. 따라서
+
+$$ \iint_S (\nabla \times F) \cdot \mathbf{n} dA = \int_S \eta_{\nabla \times F} = \int_S d\omega_F = \int_{\partial S} \omega_F = \oint_{\partial S} F \cdot d\mathbf{r} $$
+
+Green 정리는 곡면이 $xy$평면에 놓인 특수한 경우이다. 곡면이 휘어 있어도 작은 고리들의 순환을 더하면 내부의 변이 상쇄된다는 논리는 같다.
+
+**발산 정리 (Gauss 정리).** 먼저 $d\eta_F$를 계산한다. $d(F_1 dy \wedge dz) = dF_1 \wedge dy \wedge dz$에서 $dy$나 $dz$가 두 번 나오는 항은 사라지므로 $\frac{\partial F_1}{\partial x} dx \wedge dy \wedge dz$만 남는다. 나머지 두 항도 마찬가지이며, $dy \wedge dz \wedge dx$와 $dz \wedge dx \wedge dy$는 $dx \wedge dy \wedge dz$의 순서를 순환시킨 것이라 부호가 바뀌지 않는다. 따라서
+
+$$ d\eta_F = \left( \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z} \right) dx \wedge dy \wedge dz = (\nabla \cdot F) dx \wedge dy \wedge dz $$
+
+이다. $dx \wedge dy \wedge dz$는 부피 $dV$이므로
+
+$$ \iiint_V \nabla \cdot F dV = \int_V d\eta_F = \int_{\partial V} \eta_F = \iint_{\partial V} F \cdot \mathbf{n} dA $$
+
+$\partial V$에는 바깥을 향하는 법선을 준다. 직관적으로, 입체를 작은 상자로 나누어 각 상자에서 빠져나가는 유량을 모두 더하면 이웃한 상자가 공유하는 면에서는 한쪽에서 나간 양이 다른 쪽으로 들어온 양이므로 상쇄되고, 바깥 표면을 통과하는 유량만 남는다.
+
+### 예: 원판의 넓이
+
+Green 정리를 $\omega = x dy$에 적용하면 ($d\omega = dx \wedge dy$, [[Differential Form]]의 Properties of Exterior Derivative 참고) 영역의 넓이를 경계 위의 선적분으로 구할 수 있다.
+
+$$ \text{넓이}(D) = \iint_D dx \wedge dy = \oint_{\partial D} x dy $$
+
+반지름 $R$인 원판이라면 경계를 $x = R\cos t$, $y = R\sin t$ ($0 \le t \le 2\pi$)로 매개화하여 $dy = R\cos t dt$이므로
+
+$$ \oint_{\partial D} x dy = \int_0^{2\pi} R^2 \cos^2 t dt = \pi R^2. $$
+
+경계를 한 바퀴 따라가는 것만으로 넓이를 재는 면적계(planimeter)가 바로 이 원리로 작동한다.
+
+### 예: 구의 겉넓이
+
+2-form $\eta = x dy \wedge dz + y dz \wedge dx + z dx \wedge dy$를 생각하자. 이는 위치 벡터장 $\mathbf{r}$의 유량을 재는 form이다. $d\eta = 3 dx \wedge dy \wedge dz$이므로, 반지름 $R$인 공 $B$에 대해
+
+$$ \int_{\partial B} \eta = \int_B 3 dV = 3 \cdot \frac{4}{3}\pi R^3 = 4\pi R^3. $$
+
+한편 구면 위에서는 $\mathbf{r} \cdot \mathbf{n} = R$이므로, $\eta$로 잰 값은 넓이의 $R$배이다. 따라서 구의 겉넓이는 $4\pi R^3 / R = 4\pi R^2$이다. 매개화 없이 부피만으로 겉넓이를 얻은 셈이다.
