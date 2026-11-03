@@ -6,13 +6,13 @@
 
 Generalized Stokes' theorem은 다음과 같다.
 
-**정리. Generalized Stokes' Theorem** $M$을 경계 $\partial M$을 가지는 방향 지어진(oriented) 콤팩트 $n$차원 다양체라 하고, $\partial M$에는 유도된 방향을 준다. $M$ 위의 매끄러운 $(n-1)$-form $\omega$에 대해 다음이 성립한다.
+**정리. Generalized Stokes' Theorem** $M$을 경계 $\partial M$을 가지는 방향 지어진(oriented) 콤팩트 $n$차원 다양체라 하고, $\partial M$가 그 경계라고 하자. $M$ 위의 매끄러운 $(n-1)$-form $\omega$에 대해 다음이 성립한다.
 
 $$
 \int_{\partial M} \omega = \int_M d\omega
 $$
 
-[[Differential Form]]에서 본 exterior derivative의 정의를 받아들이면 이 정리는 어느정도 직관적이다.
+[[Differential Form]]에서 본 exterior derivative의 정의를 받아들이면 이 정리는 어느 정도 직관적이다.
 
 1. $M$을 작은 평행체들로 분할한다. 조각의 변의 길이의 최댓값을 $U$라 하면 조각의 개수는 대략 $U^{-n}$에 비례한다.
 2. 각 평행체에서 $d\omega$의 값은 정의에 의해 그 평행체의 경계를 $\omega$로 잰 값과 일차근사 수준에서 같다. 따라서 $\int_M d\omega \approx \sum_{c} \int_{\partial c} \omega$이다. ($c$는 분할의 각 조각)
