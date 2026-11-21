@@ -1,159 +1,331 @@
 *Telescope 0.1.1*
 
+Telescope is a formal-enough, human-readable language for writing mathematical claims the way a textbook does, precise enough to translate into Lean.
 
-## 1. Lines
+## 1. Overview
 
-A document is a sequence of lines, and every line is one of two kinds:
+Telescope is a **procedural** language for writing logical claims. Each **statement** ends at a line break or a semicolon, and a sequence of statements is a **block**. Procedural means that statement order matters: a block is read top to bottom, and each statement acts on what the statements above it have set up. A statement can only use variables introduced above it, a range proposition counts only the predicates written before it, and the order of introductions is the order of quantifiers.
 
-- a **context line**, which introduces a variable or narrows what it can be;
-- a **judgment line**, which asserts that something holds in the current context, written Γ ⊢ φ.
+Every block follows the same flow:
 
-## 2. Variables: let and final
+1. **Define a variable.** `let x : A` names x and says which domain A it ranges over.
+2. **Refine its context.** Statements that mention x narrow down which values of x are meant.
+3. **State a truth.** Either fix x with `fix x` and state what holds for every such value, or count the values that remain with `exists`, `not exists` or `unique`.
 
-Every variable is **declared once with `let`** and **closed once with `final`**. Between the two it is open and being specified; after `final` it is settled.
+Counting leaves x open, so steps 2 and 3 can alternate; fixing ends the refinement. Statements are separated by line breaks or by `;`, so several short statements can share one line: `let x : R; x != 0; fix x`.
 
-**`let` declares an open variable.** `let x : A` introduces x with type A and asserts nothing about it. While x is open, every line that mentions it is a context line that narrows its scope:
+## 2. Core concepts
+
+### 2.1 Variables
+
+**Introduction.** `let x : A` introduces x as a variable that ranges over the domain A, its **type**. Nothing is asserted. A statement that starts with `let` always brings in a new name, so the order of introductions can be read down the left margin. One statement may introduce several variables, and a later type may mention an earlier one: `let N : Type, z : N`.
+
+**Open and closed variables.** A newly introduced variable is **open**: it is still being described, and the statements that follow narrow down which of its values are meant. `fix x` makes it **closed**:
+
+- x now stands for an arbitrary but fixed value among those still meant;
+- the conditions written about x while it was open become its **assumptions**;
+- every later statement about x should hold for every such x, under those assumptions.
+
+The fix statement asserts nothing itself; it changes how later statements are read. A variable is fixed at most once, only after it is introduced, and can no longer be narrowed afterwards. `fix x, y` fixes several variables at once; section 3 shows how to introduce and fix in one statement.
+
+**Scope.** While x is open, every statement that mentions it is a **predicate** on x. The values that satisfy every predicate so far form the **scope** of x:
 
 ```latex
-\mathrm{scope}(x) = \{\, u : A \mid \text{every constraint on } x \,\}
+\mathrm{scope}(x) = \{\, x \in A \mid P_1(x) \wedge \dots \wedge P_n(x) \,\}
 ```
 
-**`final` closes the variable.** `final x` ends its specification. From that line on, the scope of x is frozen, and no later line can narrow it. A later line that mentions x is a judgment once all its variables are closed. An optional claim word says what closing asserts about the scope:
+The scope narrows with each predicate and is frozen when x is fixed; its predicates are then the assumptions of x.
 
-| Closing | Claim about scope(x) | Logic |
+**Types.** The type says where x lives; predicates say which of those values are meant. So the type is written on the `let` statement, never as a statement of its own: `d : R` is not allowed. When the type is clear from how x is used, it can be left out:
+
+- after `let d`, a predicate `|x - a| < d` with x real makes d real;
+- `x ∈ S` makes x range over the elements of S.
+
+A block is invalid if a variable's type cannot be determined, or could be more than one: `d > 0` alone fits ℕ, ℤ and ℝ. The type must be clear by the time x is fixed or used in a range proposition (2.2).
+
+### 2.2 Statements
+
+Every statement either builds the context or asserts something in it.
+
+**Context statements** build the context and assert nothing:
+
+- an introduction, `let x : A`;
+- a **predicate**, a statement that mentions an open variable;
+- a fix, `fix x`.
+
+**Judgements** assert something:
+
+- a **proposition** is a statement whose variables are all closed. It asserts that the statement holds for every value of the closed variables that meets their assumptions;
+- a **range proposition** says how many values are left in an open variable's scope. The variable stays open afterwards: later predicates can narrow it further, and later range propositions can say more.
+
+| Range proposition | Meaning | Logic |
 | --- | --- | --- |
-| `final x` | The judgments hold on all of it | ∀ |
-| `final exists x` | It is non-empty | ∃ |
-| `final not exists x` | It is empty | ¬∃ |
+| `exists x` | At least one value meets every predicate on x so far | ∃ |
+| `not exists x` | No value does | ¬∃ |
+| `unique x` | Exactly one value does | ∃! |
 
-**The difference at a glance.**
+When predicates tie two open variables together, count them jointly: `exists p, q`.
 
-|  | `let x` | `final x` |
-| --- | --- | --- |
-| Does | Opens x | Closes x |
-| Scope of x afterwards | Still narrowing | Frozen |
-| Later lines that mention x | Constrain x (context lines) | Are judgments, once all their variables are closed |
-| Asserts | Nothing | ∀, ∃ or ¬∃, by its claim word |
-| How often | Once per variable | Once per variable, after its declaration |
+**Classification.** The variables in a statement decide its kind:
 
-Header parameters of a `jug` count as already closed. A variable still open at the end of its block makes the block ill-formed.
+- a statement starting with `exists`, `not exists` or `unique` is a range proposition;
+- a statement whose variables are all closed is a proposition;
+- any other statement mentions an open variable and is a predicate on it.
 
-**One-line forms.** Each is an exact abbreviation of the separate lines, written on the declaration line:
+Composite statements (section 3) are classified after they are expanded.
 
-| One line | Means |
+Statements are built with the connectives `A => B`, `and`, `or` and `not`.
+
+**Building up a block.** Range propositions and `fix` together let a block build up the way a textbook does:
+
+```text
+let x
+P(x)
+exists x        # there is an x with P(x)
+Q(x)
+exists x        # furthermore, there is an x with P(x) and Q(x)
+fix x
+R(x)            # for every x with P(x) and Q(x), R(x)
+```
+
+The same predicate can be counted first and become an assumption later, as P(x) does here. A variable that is never fixed or counted has no effect, which usually signals a mistake.
+
+### 2.3 Rules
+
+**Polarity.** A block states all its judgements together (∧). Each judgement picks up the predicates it depends on:
+
+- predicates written before `fix x` are assumptions of every later judgement about x (→);
+- predicates on x written up to a range proposition sit inside it (∃, ¬∃ or ∃!).
+
+So the build-up example in 2.2 says: (∃x. P(x)) ∧ (∃x. P(x) ∧ Q(x)) ∧ ∀x. (P(x) ∧ Q(x) → R(x)).
+
+**Dependency.** Introduction order is quantifier order. In a range proposition about x, the variables closed before x was introduced are given, and the witness may depend on them. Closed variables introduced after x that appear in x's predicates are quantified inside the range proposition, so the witness must work for all of them. Writing such predicates as a nested block, as in Limit, makes this visible.
+
+## 3. Composite statements
+
+A composite statement combines several statements into one. It is pure shorthand: it means exactly the statements it expands to, in the order shown, so the order of introductions can still be read down the left margin.
+
+### 3.1 let fix
+
+`let fix x : A` introduces x and closes it in one statement: it means `let x : A`, then `fix x`. It suits a variable with no predicates, such as `let fix n : N`.
+
+### 3.2 where
+
+**Where Rule.** `S where C₁, …, Cₙ` attaches predicates to the statement S. The conditions are written out as separate predicates around S, where Q stands for `exists`, `not exists` or `unique`:
+
+| Written | Means |
 | --- | --- |
 | `let x : A where C` | `let x : A`, then `C` |
-| `final x : A where C` | `let x : A`, then `C`, then `final x` |
-| `final exists x : A where C` | `let x : A`, then `C`, then `final exists x` |
-| `final not exists x : A where C` | `let x : A`, then `C`, then `final not exists x` |
+| `let fix x : A where C` | `let x : A`, then `C`, then `fix x` |
+| `fix x where C` | `C`, then `fix x` |
+| `Q x where C` | `C`, then `Q x` |
 
-So in a one-line `final` form, x counts as declared at that line, and C is the complete list of constraints on x. C is a hypothesis for `final`, and the requirement for `final exists` and `final not exists`. Nothing after that line can add to C, because x is already closed. When a constraint on x mentions a variable declared later, as d's constraint mentions x in the Limit example, use the separate `let … final exists` form.
+- `where` only follows `let`, `fix` or a range proposition.
+- A condition may only mention variables introduced above or by S itself, so `where` never introduces a variable. A nested block inside a condition may introduce variables of its own, since they are local to it.
+- Each condition must mention at least one of S's variables, so it is always a predicate on them.
+- The conditions are ordinary predicates. After `exists x where C`, x stays open and C keeps narrowing it.
+- Conditions are separated by commas and may continue on indented lines.
 
-A `where` clause separates constraints with commas and may continue over indented lines. One line may declare several variables in order, and a later type may mention an earlier variable: `final N : Type, z : N`.
+`let fix e : R where e > 0` reads as "for every e > 0", and `exists d where …` as "there is a d such that …". With composite statements, the Limit definition of section 5 shrinks to three statements after the header:
 
-## 3. Core rules
+```text
+def Limit(f : R -> R, a : R, L : R) :=
+  let fix e : R where e > 0
+  let d : R where d > 0
+  exists d where { let fix x : R; 0 < |x - a| < d  =>  |f(x) - L| < e }
+```
 
-Three rules turn a block of lines into one exact statement.
+## 4. Definitions and nested blocks
 
-**Classification.** If every free variable in a line is closed, the line is a judgment line. If the line mentions any open variable, it is a context line that constrains those open variables. The state of the variables decides a line's role, not its position or wording.
+`def Name(params) := …` names the proposition its block states: all of the block's judgements together (2.3). The parameters are closed variables. A definition asserts nothing by itself. `Name(args)` can then be used as a statement and is classified like any other: a proposition if all its arguments are closed, otherwise a predicate on the open ones.
 
-**Polarity.** To read a block as one statement, place each line right after the latest-declared variable it mentions. Then:
+**Nested blocks.** Braces `{ … }` group statements into one statement of the outer block. A short block can be written on one line, with `;` separating its statements.
 
-- a constraint on a variable later closed by `final` is a **hypothesis** (→);
-- a constraint on a variable later closed by `final exists` or `final not exists` is a **requirement**, the body of the ∃ or ¬∃;
-- a judgment line is a **conclusion**.
+- Variables introduced inside a block are local to it.
+- Outer variables act as given values inside the block, whether open or closed: statements inside never narrow them.
+- The block is classified by the outer variables it mentions. In Limit, the nested block mentions d, which is open, so it is a predicate on d.
 
-**Dependency.** Declaration order is quantifier order. A variable closed by `final exists` or `final not exists` treats `final` variables declared *before* it as parameters it may depend on. `final` variables declared *after* it are quantified inside its claim.
-
-## 4. Blocks and naming
-
-**Anonymous blocks.** Braces `{ … }` form a block that stands as a single line in its outer block. A short block can be written inline, with `;` separating its lines.
-
-- Variables declared inside the block are local to it.
-- The block must be closed internally.
-- Outer variables act as parameters inside the block. The outer variables it mentions are its free variables, and the classification rule applies to the block through them.
-- A block at top level is an unnamed theorem.
-
-**Naming.** A closed block is a judgment. `jug Name(params) := …` gives it a name, and `Name(args)` can then be used as a single line anywhere. The classification rule applies through its arguments: if all are closed it is a judgment line, otherwise it constrains its open arguments. `not` may be applied to any judgment. A block that ends with open variables is ill-formed.
+In 0.1.1 every block lives inside a definition; top-level unnamed blocks are not part of this version.
 
 ## 5. Examples
 
-**Limit.** d is declared after e and before x, so it may depend on e but not on x.
+Each example is a definition. In 0.1.1 a theorem is written as the definition of the proposition it states. Prime and Surjective are defined along the way, so the later examples can use them.
+
+**Limit.** The nested block is a predicate on d, and x is local to it, so one d must work for every x.
 
 ```text
-jug Limit(f : R -> R, a : R, L : R) :=
-  final e : R where e > 0
-  let d : R where d > 0
-  final x : R
-  0 < |x - a| < d  =>  |f(x) - L| < e    # d is open: constrains d
-  final exists d
+def Limit(f : R -> R, a : R, L : R) :=
+  let e : R
+  e > 0
+  fix e
+  let d : R
+  d > 0
+  { let fix x : R; 0 < |x - a| < d  =>  |f(x) - L| < e }
+  exists d
 ```
 
 Reads as: ∀e > 0. ∃d > 0. ∀x. (0 < |x−a| < d → |f(x)−L| < e).
 
-**Induction.** A nested block serves as a hypothesis on P.
+**Induction.** P ranges over properties of N (Prop is the domain of propositions). The nested block is a predicate on P, and becomes an assumption when P is fixed.
 
 ```text
-jug Induction(N : Type, z : N, S : N -> N) :=
-  final P : N -> Prop where
-    P(z)
-    { final k : N where P(k); P(S(k)) }   # P is open: a hypothesis
-  final n : N
+def Induction(N : Type, z : N, S : N -> N) :=
+  let P : N -> Prop
+  P(z)
+  { let k : N; P(k); fix k; P(S(k)) }
+  fix P
+  let fix n : N
   P(n)
 ```
 
 Reads as: ∀P. P(z) → (∀k. P(k) → P(S(k))) → ∀n. P(n).
 
-**Sum of limits.** An unnamed top-level theorem.
+**Sum of limits.**
 
 ```text
-{ final f, g : R -> R
-  final a, L, M : R where Limit(f, a, L), Limit(g, a, M)
-  Limit(f + g, a, L + M) }
+def LimitAdd :=
+  let fix f, g : R -> R
+  let a, L, M : R
+  Limit(f, a, L)
+  Limit(g, a, M)
+  fix a, L, M
+  Limit(f + g, a, L + M)
 ```
+
+Reads as: ∀f, g. ∀a, L, M. Limit(f, a, L) ∧ Limit(g, a, M) → Limit(f + g, a, L + M).
+
+**Prime numbers.** A definition may contain several judgements, and all of them must hold.
+
+```text
+def Prime(p : N) :=
+  p > 1
+  { let d : N; d | p; fix d; d = 1 or d = p }
+```
+
+Reads as: p > 1 ∧ ∀d. (d ∣ p → d = 1 ∨ d = p).
 
 **Infinitely many primes.**
 
 ```text
-{ final n : N
-  final exists p : N where p > n, Prime(p) }
+def InfinitelyManyPrimes :=
+  let fix n : N
+  let p : N
+  p > n
+  Prime(p)
+  exists p
 ```
+
+Reads as: ∀n. ∃p. p > n ∧ Prime(p).
 
 **√2 is irrational.**
 
 ```text
-{ final not exists p, q : Z where q != 0, p^2 = 2 q^2 }
+def Sqrt2Irrational :=
+  let p, q : Z
+  q != 0
+  p^2 = 2 q^2
+  not exists p, q
 ```
+
+Reads as: ¬∃p, q ∈ ℤ. q ≠ 0 ∧ p² = 2q².
+
+**Surjectivity.** a is introduced after b, so it may depend on b.
+
+```text
+def Surjective(A : Type, B : Type, f : A -> B) :=
+  let fix b : B
+  let a : A
+  f(a) = b
+  exists a
+```
+
+Reads as: ∀b. ∃a. f(a) = b.
 
 **Cantor's theorem.**
 
 ```text
-{ final A : Type
-  final not exists f : A -> Set(A) where Surjective(A, Set(A), f) }
+def Cantor :=
+  let fix A : Type
+  let f : A -> Set(A)
+  Surjective(A, Set(A), f)
+  not exists f
 ```
 
-Reads as: ∀A. ¬∃f. Surjective(f).
+Reads as: ∀A. ¬∃f : A → Set(A). Surjective(f).
 
-## 6. Meaning
-
-Every closed block compiles deterministically to an ordered list of binders, which gives it an exact type-theoretic meaning and a direct Lean translation.
-
-| Construct | Type theory | Lean |
-| --- | --- | --- |
-| `final x` | Π | `∀ x, …` |
-| `final exists x` | Σ (as a proposition) | `∃ x, …` |
-| `final not exists x` | ¬Σ | `¬ ∃ x, …` |
-| Hypothesis | Function domain | `h → …` |
-| Requirement | Pair component | `… ∧ …` |
-| `jug Name(…) := …` | Named proposition | `def Name … : Prop` |
-| Top-level block | Judgment | `example : …` |
-
-For example, the sum-of-limits block becomes:
+**Multiplicative inverses.**
 
 ```text
-example (f g : ℝ → ℝ) (a L M : ℝ)
-    (h₁ : Limit f a L) (h₂ : Limit g a M) :
-    Limit (f + g) a (L + M) := by sorry
+def Inverse :=
+  let x : R
+  x != 0
+  fix x
+  let y : R
+  x * y = 1
+  unique y
 ```
 
-Each judgment line is a **proof obligation**. A later justification layer (`by …`) will attach proofs, which can be filled procedurally or with AI help and then checked by Lean's kernel. Quantifier structure always comes from the rules above, never from AI, so a translated statement means exactly what was written.
+Reads as: ∀x ≠ 0. ∃!y. xy = 1.
+
+## 6. Connection with Lean
+
+Every definition compiles deterministically to a Lean proposition. Lean is based on type theory, and this section is the only place where that background matters.
+
+Composite statements (section 3) are expanded before translation, so they need no rows of their own.
+
+| Telescope | Type theory | Lean |
+| --- | --- | --- |
+| `let x : A` | Variable declaration x : A | Binder `(x : A)` |
+| Predicate P(x) | P : A → Prop | `P x` |
+| Scope of x | Subtype {x : A ∣ P x} | `{x : A // P x}` |
+| `fix x` | Context extension Γ, x : A, h : P x | `∀ x, P x → …` |
+| Proposition φ | Judgement Γ ⊢ φ | `φ`, proved in that context |
+| `exists x` | The subtype is inhabited | `∃ x, P x ∧ …` |
+| `not exists x` | The subtype is empty | `¬ ∃ x, P x ∧ …` |
+| `unique x` | The subtype has one element | `∃! x, …` |
+| Several judgements | Product | `… ∧ …` |
+| `def Name(…) := …` | Definition of a proposition | `def Name … : Prop := …` |
+
+For example, the build-up in 2.2 and the inverse example become:
+
+```text
+(∃ x, P x) ∧ (∃ x, P x ∧ Q x) ∧ (∀ x, P x → Q x → R x)
+
+∀ x : ℝ, x ≠ 0 → ∃! y : ℝ, x * y = 1
+```
+
+Two design choices come from this background. In type theory a variable's type is part of its declaration, not a proposition, which is why Telescope keeps types on the `let` statement. And Lean silently defaults numerals to ℕ when a type is missing, which is why Telescope rejects undetermined types instead of guessing.
+
+Each judgement becomes a **proof obligation**. A later proof layer will discharge them, procedurally or with AI help, checked by Lean's kernel. Quantifier structure always comes from the rules in 2.3, never from AI, so a translated block means exactly what was written.
+
+## 7. Revisions
+
+**0.1.1** (2026-11-21), changes from 0.1.0:
+
+- `final` is renamed `fix`.
+- `exists` and `not exists` no longer close a variable: they are range propositions, and the variable stays open after them. `unique` is added.
+- The `final exists` and `final not exists` forms are removed.
+- The `where` clause is restricted: it only follows let, fix or a range proposition, never introduces a variable, and its conditions are ordinary predicates.
+- Variables are introduced only by `let`; fixing or counting a name that was never introduced is an error. `let fix` is added for introducing and fixing in one statement.
+- A type can only be written on `let`, and may be left out when it is clear from use. An undetermined or ambiguous type makes a block invalid.
+- Lines are now called statements, and a sequence of statements a block. Judgement lines are split into propositions and range propositions; context lines that narrow a variable are now called predicates.
+- A block now asserts all of its judgements together, instead of compiling to a single chain of quantifiers.
+- `jug` is renamed `def`, and top-level unnamed blocks are removed.
+
+**0.1.0** (2026-11-06): initial version.
+
+## Appendix: Keyword reference
+
+| Keyword | Kind | Meaning |
+| --- | --- | --- |
+| `let x : A` | Introduction | x ranges over A; nothing is asserted |
+| `fix x` | Fix | x is now arbitrary but fixed; its predicates become assumptions |
+| `let fix x : A` | Composite statement | Introduces x and fixes it at once |
+| `exists x` | Range proposition | ∃: some value meets every predicate on x so far |
+| `not exists x` | Range proposition | ¬∃: no value does |
+| `unique x` | Range proposition | ∃!: exactly one value does |
+| `;` | Separator | Ends a statement, like a line break |
+| `{ … }` | Nested block | A group of statements used as one statement |
+| `def Name(…) := …` | Definition | Names a proposition |
+| `not`, `=>`, `and`, `or` | Connectives | ¬, →, ∧, ∨ |
+| `S where C` | Composite statement | Attaches predicates C to S (section 3.2) |
