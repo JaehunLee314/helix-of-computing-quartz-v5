@@ -1,4 +1,5 @@
-*Version 0.1.0*
+*Telescope 0.1.1*
+
 
 ## 1. Lines
 
@@ -7,15 +8,17 @@ A document is a sequence of lines, and every line is one of two kinds:
 - a **context line**, which introduces a variable or narrows what it can be;
 - a **judgment line**, which asserts that something holds in the current context, written Γ ⊢ φ.
 
-## 2. Variables and States
+## 2. Variables: let and final
 
-Every variable has a type and is either **open** or **closed**. `let x : A` makes x open: it is still being specified. Its scope starts as the whole type A, and every later context line that mentions x narrows it:
+Every variable is **declared once with `let`** and **closed once with `final`**. Between the two it is open and being specified; after `final` it is settled.
 
-$$
-\text{scope}(x) = \{\, u : A \mid \text{every constraint on } x \,\}
-$$
+**`let` declares an open variable.** `let x : A` introduces x with type A and asserts nothing about it. While x is open, every line that mentions it is a context line that narrows its scope:
 
-`final` closes a variable: all information about it is now set. An optional claim word says what is asserted about its scope:
+```latex
+\mathrm{scope}(x) = \{\, u : A \mid \text{every constraint on } x \,\}
+```
+
+**`final` closes the variable.** `final x` ends its specification. From that line on, the scope of x is frozen, and no later line can narrow it. A later line that mentions x is a judgment once all its variables are closed. An optional claim word says what closing asserts about the scope:
 
 | Closing | Claim about scope(x) | Logic |
 | --- | --- | --- |
@@ -23,16 +26,32 @@ $$
 | `final exists x` | It is non-empty | ∃ |
 | `final not exists x` | It is empty | ¬∃ |
 
-Header parameters of a `jug` are closed.
+**The difference at a glance.**
 
-**Shorthand.**
+|  | `let x` | `final x` |
+| --- | --- | --- |
+| Does | Opens x | Closes x |
+| Scope of x afterwards | Still narrowing | Frozen |
+| Later lines that mention x | Constrain x (context lines) | Are judgments, once all their variables are closed |
+| Asserts | Nothing | ∀, ∃ or ¬∃, by its claim word |
+| How often | Once per variable | Once per variable, after its declaration |
 
-- `let x : A where C` declares x together with a constraint C.
-- `final [exists | not exists] x : A where C` declares and closes in one line. x counts as declared at that line, and C holds its constraints.
-- A `where` clause may continue over indented lines.
-- One line may declare several variables in order, and a later type may mention an earlier variable: `final N : Type, z : N`.
+Header parameters of a `jug` count as already closed. A variable still open at the end of its block makes the block ill-formed.
 
-## 3. Core Rules
+**One-line forms.** Each is an exact abbreviation of the separate lines, written on the declaration line:
+
+| One line | Means |
+| --- | --- |
+| `let x : A where C` | `let x : A`, then `C` |
+| `final x : A where C` | `let x : A`, then `C`, then `final x` |
+| `final exists x : A where C` | `let x : A`, then `C`, then `final exists x` |
+| `final not exists x : A where C` | `let x : A`, then `C`, then `final not exists x` |
+
+So in a one-line `final` form, x counts as declared at that line, and C is the complete list of constraints on x. C is a hypothesis for `final`, and the requirement for `final exists` and `final not exists`. Nothing after that line can add to C, because x is already closed. When a constraint on x mentions a variable declared later, as d's constraint mentions x in the Limit example, use the separate `let … final exists` form.
+
+A `where` clause separates constraints with commas and may continue over indented lines. One line may declare several variables in order, and a later type may mention an earlier variable: `final N : Type, z : N`.
+
+## 3. Core rules
 
 Three rules turn a block of lines into one exact statement.
 
@@ -46,7 +65,7 @@ Three rules turn a block of lines into one exact statement.
 
 **Dependency.** Declaration order is quantifier order. A variable closed by `final exists` or `final not exists` treats `final` variables declared *before* it as parameters it may depend on. `final` variables declared *after* it are quantified inside its claim.
 
-## 4. Blocks and Naming
+## 4. Blocks and naming
 
 **Anonymous blocks.** Braces `{ … }` form a block that stands as a single line in its outer block. A short block can be written inline, with `;` separating its lines.
 
