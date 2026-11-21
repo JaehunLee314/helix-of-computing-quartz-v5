@@ -30,9 +30,9 @@ The fix statement asserts nothing itself; it changes how later statements are re
 
 **Scope.** While x is open, every statement that mentions it is a **predicate** on x. The values that satisfy every predicate so far form the **scope** of x:
 
-```latex
-\mathrm{scope}(x) = \{\, x \in A \mid P_1(x) \wedge \dots \wedge P_n(x) \,\}
-```
+$$
+\mathrm{scope}(x) = \{ x \in A \mid P_1(x) \wedge \dots \wedge P_n(x) \}
+$$
 
 The scope narrows with each predicate and is frozen when x is fixed; its predicates are then the assumptions of x.
 
