@@ -118,7 +118,7 @@ Each wave has size $|x^\rho| = x^{\operatorname{Re}\rho}$: **the real part of a 
 Let $\theta(x) = \sum_{p \le x,\ p\ \text{prime}} \log p$ count primes only. Then $\pi(x) = \int_2^x d\theta(t)/\log t$ exactly, since each jump of size $\log p$ at a prime $p$ is divided by $\log p$. Replacing $\theta$ by $\psi$ adds the prime powers $p^k$ with $k \ge 2$, which changes the result by only $O(\sqrt{x})$. With $\psi(x) = x + E(x)$ from above, the main term $x$ becomes $\operatorname{Li}(x)$ and $E$ becomes the error term exactly:
 
 $$
-\begin{aligned} \pi(x) &= \int_2^x \frac{d\psi(t)}{\log t} + O(\sqrt{x}) \ e(x) &= \frac{E(x)}{\log x} + \int_2^x \frac{E(t)}{t\log^2 t}dt + O(\sqrt{x}) \end{aligned}
+\begin{aligned} \pi(x) &= \int_2^x \frac{d\psi(t)}{\log t} + O(\sqrt{x}) \\ e(x) &= \frac{E(x)}{\log x} + \int_2^x \frac{E(t)}{t\log^2 t}dt + O(\sqrt{x}) \end{aligned}
 $$
 
 This formula is exact in principle but not closed-form, because the zeros are known only numerically. Its use is to turn the question "how big is $e(x)$?" into "where are the zeros?".
