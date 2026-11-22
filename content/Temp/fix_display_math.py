@@ -47,7 +47,7 @@ def main(paths):
         if fixed == original:
             print(f"unchanged: {path}")
             continue
-        shutil.copyfile(path, path + ".bak")
+        # shutil.copyfile(path, path + ".bak")
         with open(path, "w", encoding="utf-8") as f:
             f.write(fixed)
         print(f"fixed:     {path}")

@@ -39,7 +39,7 @@ The two forms are equivalent because $\operatorname{Li}(x)/(x/\log x) \to 1$: by
 To understand $e(x)$, we pass from the primes to a function of a complex variable, $\zeta(s)$, and back. Sections 2.1 to 2.5 each explain one arrow of this route:
 
 $$
-\begin{aligned} \sum_{n\ge1} \frac{1}{n^{s}} &\xrightarrow{\ \text{Euler product}\ } \prod_{p\ \text{prime}} \frac{1}{1-p^{-s}} \xrightarrow{\ \text{log-derivative}\ } \sum_{n\ge1}\frac{\Lambda(n)}{n^{s}} \xrightarrow{\ \text{running sum}\ } \mathcal{L}{\psi(e^u)}(s) = -\frac{\zeta'(s)}{s,\zeta(s)} \\ &\xrightarrow{\ \text{analytic continuation of } \zeta,\ \text{inverse Laplace}\ } \psi(x) = x - \sum_{\rho\ \text{nontrivial zeros}} \frac{x^\rho}{\rho} - \cdots \xrightarrow{\ \text{undo the weights}\ } \pi(x) = \operatorname{Li}(x) + e(x) \end{aligned}
+\begin{aligned} \sum_{n\ge1} \frac{1}{n^{s}} &\xrightarrow{\ \text{Euler product}\ } \prod_{p\ \text{prime}} \frac{1}{1-p^{-s}} \xrightarrow{\ \text{log-derivative}\ } \sum_{n\ge1}\frac{\Lambda(n)}{n^{s}} \xrightarrow{\ \text{running sum}\ } \mathcal{L}{\psi(e^u)}(s) = -\frac{\zeta'(s)}{s\zeta(s)} \\ &\xrightarrow{\ \text{analytic continuation of } \zeta,\ \text{inverse Laplace}\ } \psi(x) = x - \sum_{\rho\ \text{nontrivial zeros}} \frac{x^\rho}{\rho} - \cdots \xrightarrow{\ \text{undo the weights}\ } \pi(x) = \operatorname{Li}(x) + e(x) \end{aligned}
 $$
 
 ### 2.1 The zeta function and the Euler product
@@ -63,7 +63,7 @@ Proof sketch: expand each factor as $1 + p^{-s} + p^{-2s} + \cdots$ and multiply
 The von Mangoldt function $\Lambda$ marks the primes and their powers, giving each the weight $\log p$:
 
 $$
-\Lambda(n) = \begin{cases} \log p & \text{if } n = p^k \text{ for a prime } p \text{ and some } k \ge 1 \\ 0 & \text{otherwise} \end{cases}
+\Lambda(n) = \begin{cases} \log p & \text{if } n = p^k \text{ for a prime } p \text{ and some } k \ge 1 \ 0 & \text{otherwise} \end{cases}
 $$
 
 For example $\Lambda(7) = \log 7$, $\Lambda(8) = \Lambda(2^3) = \log 2$, and $\Lambda(6) = 0$, since $6 = 2\cdot 3$ is not a prime power.
@@ -71,7 +71,7 @@ For example $\Lambda(7) = \log 7$, $\Lambda(8) = \Lambda(2^3) = \log 2$, and $\L
 **Theorem.** For $\operatorname{Re} s > 1$, the coefficients of $-\zeta'/\zeta$ are exactly the values $\Lambda(n)$:
 
 $$
-\log\zeta(s) = \sum_{p\ \text{prime}}\sum_{k\ge1}\frac{p^{-ks}}{k} \quad\Longrightarrow\quad -\frac{\zeta'(s)}{\zeta(s)} = \sum_{p\ \text{prime}}\sum_{k\ge1}\log p,(p^k)^{-s} = \sum_{n\ge1}\frac{\Lambda(n)}{n^s} \qquad (\operatorname{Re} s > 1)
+\log\zeta(s) = \sum_{p\ \text{prime}}\sum_{k\ge1}\frac{p^{-ks}}{k} \quad\Longrightarrow\quad -\frac{\zeta'(s)}{\zeta(s)} = \sum_{p\ \text{prime}}\sum_{k\ge1}\log p(p^k)^{-s} = \sum_{n\ge1}\frac{\Lambda(n)}{n^s} \qquad (\operatorname{Re} s > 1)
 $$
 
 Proof sketch: take the log of the Euler product and expand each $-\log(1 - p^{-s})$ with $-\log(1 - y) = y + y^2/2 + \cdots$; this gives the first identity. Differentiating in $s$ (written $\zeta'$) brings down a factor $k\log p$ from each term, which cancels the $1/k$ and leaves the weights $\Lambda(n)$.
@@ -88,15 +88,15 @@ $$
 
 The weight $\log p$ is not a choice: it is exactly what the log-derivative of $\zeta$ produces (section 2.2). In these terms the PNT reads as $\psi(x)/x \to 1$.
 
-Now measure $x$ on a log scale, $u = \log x$. Then $n^{-s} = e^{-su}$, so sums such as $\sum \Lambda(n), n^{-s}$ become Laplace transforms. The Laplace transform turns a signal $f(u)$ into a function of $s$: $\mathcal{L}{f}(s) = \int f(u), e^{-su}, du$. The basic pair is $\mathcal{L}{e^{au}}(s) = 1/(s - a)$: an exponential term in the signal corresponds to a simple pole in the transform. Conversely, inverting a transform recovers one term $c, e^{au}$ for each pole $a$, where $c$ is the residue there, so $\operatorname{Re} a$ is that term's growth rate.
+Now measure $x$ on a log scale, $u = \log x$. Then $n^{-s} = e^{-su}$, so sums such as $\sum \Lambda(n) n^{-s}$ become Laplace transforms. The Laplace transform turns a signal $f(u)$ into a function of $s$: $\mathcal{L}{f}(s) = \int f(u) e^{-su} du$. The basic pair is $\mathcal{L}{e^{au}}(s) = 1/(s - a)$: an exponential term in the signal corresponds to a simple pole in the transform. Conversely, inverting a transform recovers one term $c e^{au}$ for each pole $a$, where $c$ is the residue there, so $\operatorname{Re} a$ is that term's growth rate.
 
 **Theorem.** For $\operatorname{Re} s > 1$, the transform of $\psi(e^u)$ is $\zeta$'s log-derivative divided by $s$; the factor $1/s$ appears because $\psi$ is a running sum:
 
 $$
-\mathcal{L}{\psi(e^u)}(s) = -\frac{1}{s},\frac{\zeta'(s)}{\zeta(s)}
+\mathcal{L}{\psi(e^u)}(s) = -\frac{1}{s}\frac{\zeta'(s)}{\zeta(s)}
 $$
 
-Near a zero $\rho$, $\zeta(s) \approx c,(s - \rho)$, so $-\zeta'/\zeta \approx -1/(s - \rho)$: a zero of $\zeta$ is a simple pole of $-\zeta'/\zeta$. Inverting the transform turns each pole into a term of $\psi$, so **every zero of ζ becomes a term in ψ**.
+Near a zero $\rho$, $\zeta(s) \approx c(s - \rho)$, so $-\zeta'/\zeta \approx -1/(s - \rho)$: a zero of $\zeta$ is a simple pole of $-\zeta'/\zeta$. Inverting the transform turns each pole into a term of $\psi$, so **every zero of ζ becomes a term in ψ**.
 
 ### 2.4 The zeros of ζ and the explicit formula
 
@@ -108,7 +108,7 @@ Inverting the transform needs $\zeta$ to the left of $\operatorname{Re} s = 1$, 
 **Theorem (explicit formula, von Mangoldt, 1895).** Inverting the transform and summing the residues gives $\psi$ exactly, for $x > 1$ not a prime power. The pole at $s = 1$ gives the main term $x$, the pole at $s = 0$ and the trivial zeros give the constant and the last term, and there is one wave per nontrivial zero $\rho$. Together, everything after the main term is the error $E(x)$:
 
 $$
-\psi(x) = x ;\underbrace{-\sum_{\rho\ \text{nontrivial zeros}} \frac{x^\rho}{\rho} - \log 2\pi - \tfrac12\log!\left(1 - x^{-2}\right)}_{E(x)}
+\psi(x) = x \underbrace{-\sum_{\rho\ \text{nontrivial zeros}} \frac{x^\rho}{\rho} - \log 2\pi - \tfrac12\log\left(1 - x^{-2}\right)}_{E(x)}
 $$
 
 Each wave has size $|x^\rho| = x^{\operatorname{Re}\rho}$: **the real part of a zero decides how big its wave grows**, while the imaginary part only makes it oscillate.
@@ -118,7 +118,7 @@ Each wave has size $|x^\rho| = x^{\operatorname{Re}\rho}$: **the real part of a 
 Let $\theta(x) = \sum_{p \le x,\ p\ \text{prime}} \log p$ count primes only. Then $\pi(x) = \int_2^x d\theta(t)/\log t$ exactly, since each jump of size $\log p$ at a prime $p$ is divided by $\log p$. Replacing $\theta$ by $\psi$ adds the prime powers $p^k$ with $k \ge 2$, which changes the result by only $O(\sqrt{x})$. With $\psi(x) = x + E(x)$ from above, the main term $x$ becomes $\operatorname{Li}(x)$ and $E$ becomes the error term exactly:
 
 $$
-\begin{aligned} \pi(x) &= \int_2^x \frac{d\psi(t)}{\log t} + O(\sqrt{x}) \\ e(x) &= \frac{E(x)}{\log x} + \int_2^x \frac{E(t)}{t,\log^2 t},dt + O(\sqrt{x}) \end{aligned}
+\begin{aligned} \pi(x) &= \int_2^x \frac{d\psi(t)}{\log t} + O(\sqrt{x}) \ e(x) &= \frac{E(x)}{\log x} + \int_2^x \frac{E(t)}{t\log^2 t}dt + O(\sqrt{x}) \end{aligned}
 $$
 
 This formula is exact in principle but not closed-form, because the zeros are known only numerically. Its use is to turn the question "how big is $e(x)$?" into "where are the zeros?".
@@ -131,18 +131,18 @@ $$
 \zeta(\rho) = 0 \ \text{ and } \ 0 < \operatorname{Re}\rho < 1 \quad\Longrightarrow\quad \operatorname{Re}\rho = \tfrac12
 $$
 
-**From the zeros to the error.** By the explicit formula, $E(x)$ is a sum of waves $x^\rho/\rho$, one per nontrivial zero, and each has amplitude $x^{\operatorname{Re}\rho}/|\rho|$. So the error is driven by the zeros furthest to the right: if $\Theta$ is the largest real part of a zero, $E(x)$ grows like $x^\Theta$, up to logarithmic factors. Under RH, $\Theta = \tfrac12$ and every wave has amplitude $\sqrt{x}/|\rho|$. There are about $(T/2\pi)\log T$ zeros up to height $T$, and summing the waves gives $E(x) = O(\sqrt{x},\log^2 x)$. Section 2.5 then gives:
+**From the zeros to the error.** By the explicit formula, $E(x)$ is a sum of waves $x^\rho/\rho$, one per nontrivial zero, and each has amplitude $x^{\operatorname{Re}\rho}/|\rho|$. So the error is driven by the zeros furthest to the right: if $\Theta$ is the largest real part of a zero, $E(x)$ grows like $x^\Theta$, up to logarithmic factors. Under RH, $\Theta = \tfrac12$ and every wave has amplitude $\sqrt{x}/|\rho|$. There are about $(T/2\pi)\log T$ zeros up to height $T$, and summing the waves gives $E(x) = O(\sqrt{x}\log^2 x)$. Section 2.5 then gives:
 
 $$
-e(x) = O(\sqrt{x},\log x)
+e(x) = O(\sqrt{x}\log x)
 $$
 
-$O(\cdot)$ means "at most a constant times": there is one constant $K$ with $|e(x)| \le K\sqrt{x},\log x$ for every $x \ge 2$.
+$O(\cdot)$ means "at most a constant times": there is one constant $K$ with $|e(x)| \le K\sqrt{x}\log x$ for every $x \ge 2$.
 
-**From the error back to the zeros.** The Laplace view also runs in reverse. A signal that grows no faster than $e^{\theta u}$ has a transform with no poles for $\operatorname{Re} s > \theta$, since a pole at $a$ would put a term growing like $e^{(\operatorname{Re} a)u}$ into the signal. Suppose $e(x) = O(x^{1/2+\varepsilon})$ for every $\varepsilon > 0$. Then $E(x) = O(x^{1/2+\varepsilon})$ as well, so its transform, $-\zeta'(s)/(s,\zeta(s)) - 1/(s - 1)$, has no poles with $\operatorname{Re} s > \tfrac12$. The zeros of $\zeta$ are exactly those poles, so $\zeta$ has no zeros with $\operatorname{Re} s > \tfrac12$, and by the symmetry $\rho \leftrightarrow 1 - \rho$ none with $\operatorname{Re} s < \tfrac12$. So the bound is **equivalent** to RH (von Koch, 1901). More generally, the growth exponent of the error and the largest real part of a zero are the same number:
+**From the error back to the zeros.** The Laplace view also runs in reverse. A signal that grows no faster than $e^{\theta u}$ has a transform with no poles for $\operatorname{Re} s > \theta$, since a pole at $a$ would put a term growing like $e^{(\operatorname{Re} a)u}$ into the signal. Suppose $e(x) = O(x^{1/2+\varepsilon})$ for every $\varepsilon > 0$. Then $E(x) = O(x^{1/2+\varepsilon})$ as well, so its transform, $-\zeta'(s)/(s\zeta(s)) - 1/(s - 1)$, has no poles with $\operatorname{Re} s > \tfrac12$. The zeros of $\zeta$ are exactly those poles, so $\zeta$ has no zeros with $\operatorname{Re} s > \tfrac12$, and by the symmetry $\rho \leftrightarrow 1 - \rho$ none with $\operatorname{Re} s < \tfrac12$. So the bound is **equivalent** to RH (von Koch, 1901). More generally, the growth exponent of the error and the largest real part of a zero are the same number:
 
 $$
-\sup_{\rho\ \text{nontrivial zeros}} \operatorname{Re}\rho \le \Theta \quad\iff\quad E(x) = O!\left(x^{\Theta+\varepsilon}\right) \text{ for every } \varepsilon > 0
+\sup_{\rho\ \text{nontrivial zeros}} \operatorname{Re}\rho \le \Theta \quad\iff\quad E(x) = O\left(x^{\Theta+\varepsilon}\right) \text{ for every } \varepsilon > 0
 $$
 
 Since infinitely many zeros lie on the line, no bound of order $x^{1/2-\delta}$ with $\delta > 0$ is possible: under RH the error is as small as it can be.
@@ -150,9 +150,10 @@ Since infinitely many zeros lie on the line, no bound of order $x^{1/2-\delta}$ 
 |Statement|Size of the error $e(x)$|What it needs from the zeros|
 |---|---|---|
 |PNT (proved 1896)|$o(x/\log x)$|none on the line $\operatorname{Re} s = 1$|
-|RH|$O(\sqrt{x},\log x)$|all on the line $\operatorname{Re} s = \tfrac12$|
+|RH|$O(\sqrt{x}\log x)$|all on the line $\operatorname{Re} s = \tfrac12$|
 
-Between the two rows lies every case with a zero off the line. A single zero with real part $\beta > \tfrac12$ would make $|e(x)|$ exceed $x^{\beta-\varepsilon}$ infinitely often, for every $\varepsilon > 0$, far above $\sqrt{x},\log x$.
+Between the two rows lies every case with a zero off the line. A single zero with real part $\beta > \tfrac12$ would make $|e(x)|$ exceed $x^{\beta-\varepsilon}$ infinitely often, for every $\varepsilon > 0$, far above $\sqrt{x}\log x$.
 
 ## Footnote
+
 - RH may have been proven as of 20 Nov, 2026. Impressive.

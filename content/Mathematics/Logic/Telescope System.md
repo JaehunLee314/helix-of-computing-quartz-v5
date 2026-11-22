@@ -31,7 +31,7 @@ The fix statement asserts nothing itself; it changes how later statements are re
 **Scope.** While x is open, every statement that mentions it is a **predicate** on x. The values that satisfy every predicate so far form the **scope** of x:
 
 $$
-\mathrm{scope}(x) = {, x \in A \mid P_1(x) \wedge \dots \wedge P_n(x) ,}
+\mathrm{scope}(x) = \lbrace x \in A \mid P_1(x) \wedge \dots \wedge P_n(x) \rbrace
 $$
 
 The scope narrows with each predicate and is frozen when x is fixed; its predicates are then the assumptions of x.
@@ -97,7 +97,7 @@ The same predicate can be counted first and become an assumption later, as P(x) 
 - predicates written before `fix x` are assumptions of every later judgement about x ($\to$);
 - predicates on x written up to a range proposition sit inside it ($\exists$, $\neg\exists$ or $\exists!$).
 
-So the build-up example in 2.2 says: $(\exists x., P(x)) \wedge (\exists x., P(x) \wedge Q(x)) \wedge \forall x., (P(x) \wedge Q(x) \to R(x))$.
+So the build-up example in 2.2 says: $(\exists x. P(x)) \wedge (\exists x. P(x) \wedge Q(x)) \wedge \forall x. (P(x) \wedge Q(x) \to R(x))$.
 
 **Dependency.** Introduction order is quantifier order. In a range proposition about x, the variables closed before x was introduced are given, and the witness may depend on them. Closed variables introduced after x that appear in x's predicates are quantified inside the range proposition, so the witness must work for all of them. Writing such predicates as a nested block, as in Limit, makes this visible.
 
@@ -277,8 +277,8 @@ Composite statements (section 3) are expanded before translation, so they need n
 |---|---|---|
 |`let x : A`|Variable declaration $x : A$|Binder `(x : A)`|
 |Predicate $P(x)$|$P : A \to \mathrm{Prop}$|`P x`|
-|Scope of x|Subtype ${x : A \mid P,x}$|`{x : A // P x}`|
-|`fix x`|Context extension $\Gamma, x : A, h : P,x$|`∀ x, P x → …`|
+|Scope of x|Subtype $\lbrace x : A \mid P\ x \rbrace$|`{x : A // P x}`|
+|`fix x`|Context extension $\Gamma, x : A, h : P\ x$|`∀ x, P x → …`|
 |Proposition $\varphi$|Judgement $\Gamma \vdash \varphi$|`φ`, proved in that context|
 |`exists x`|The subtype is inhabited|`∃ x, P x ∧ …`|
 |`not exists x`|The subtype is empty|`¬ ∃ x, P x ∧ …`|
@@ -316,16 +316,16 @@ Each judgement becomes a **proof obligation**. A later proof layer will discharg
 
 ## Appendix: Keyword reference
 
-| Keyword                  | Kind                | Meaning                                                         |
-| ------------------------ | ------------------- | --------------------------------------------------------------- |
-| `let x : A`              | Introduction        | x ranges over A; nothing is asserted                            |
-| `fix x`                  | Fix                 | x is now arbitrary but fixed; its predicates become assumptions |
-| `let fix x : A`          | Composite statement | Introduces x and fixes it at once                               |
-| `exists x`               | Range proposition   | $\exists$: some value meets every predicate on x so far         |
-| `not exists x`           | Range proposition   | $\neg\exists$: no value does                                    |
-| `unique x`               | Range proposition   | $\exists!$: exactly one value does                              |
-| `;`                      | Separator           | Ends a statement, like a line break                             |
-| `{ … }`                  | Nested block        | A group of statements used as one statement                     |
-| `def Name(…) := …`       | Definition          | Names a proposition                                             |
-| `not`, `=>`, `and`, `or` | Connectives         | $\neg$, $\to$, $\wedge$, $\vee$                                 |
-| `S where C`              | Composite statement | Attaches predicates C to S (section 3.2)                        |
+|Keyword|Kind|Meaning|
+|---|---|---|
+|`let x : A`|Introduction|x ranges over A; nothing is asserted|
+|`fix x`|Fix|x is now arbitrary but fixed; its predicates become assumptions|
+|`let fix x : A`|Composite statement|Introduces x and fixes it at once|
+|`exists x`|Range proposition|$\exists$: some value meets every predicate on x so far|
+|`not exists x`|Range proposition|$\neg\exists$: no value does|
+|`unique x`|Range proposition|$\exists!$: exactly one value does|
+|`;`|Separator|Ends a statement, like a line break|
+|`{ … }`|Nested block|A group of statements used as one statement|
+|`def Name(…) := …`|Definition|Names a proposition|
+|`not`, `=>`, `and`, `or`|Connectives|$\neg$, $\to$, $\wedge$, $\vee$|
+|`S where C`|Composite statement|Attaches predicates C to S (section 3.2)|
