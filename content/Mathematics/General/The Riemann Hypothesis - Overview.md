@@ -1,3 +1,5 @@
+**Prerequisites:** [[Big-O Like Notations]], [[Impulse Response와 Convolution]]
+
 The Riemann Hypothesis (RH) is a statement about how evenly the prime numbers are spread out. This guide explains what it says and why it is a statement about the zeros of one function, $\zeta$. Throughout, $\log$ means the natural logarithm.
 
 ## 1. Prime counter approximation
@@ -27,10 +29,10 @@ $$
 This is equivalent to saying the error is negligible compared to the count:
 
 $$
-e(x) = o!\left(\frac{x}{\log x}\right), \quad\text{meaning}\quad \frac{e(x)}{x/\log x} \to 0
+e(x) = o\left(\frac{x}{\log x}\right)
 $$
 
-The two forms are equivalent because $\operatorname{Li}(x)/(x/\log x) \to 1$: by L'Hôpital, the ratio of derivatives is $\dfrac{1/\log x}{1/\log x - 1/\log^2 x} \to 1$. The PNT fixes only the leading order of $\pi(x)$. RH concerns the next order: the exact growth rate of $e(x)$.
+The two forms are equivalent because $\operatorname{Li}(x)/(x/\log x) \to 1$: by L'Hôpital. The PNT fixes only the leading order of $\pi(x)$. RH concerns the next order: the exact growth rate of $e(x)$.
 
 ## 2. The error term analysis
 
@@ -61,7 +63,7 @@ Proof sketch: expand each factor as $1 + p^{-s} + p^{-2s} + \cdots$ and multiply
 The von Mangoldt function $\Lambda$ marks the primes and their powers, giving each the weight $\log p$:
 
 $$
-\Lambda(n) = \begin{cases} \log p & \text{if } n = p^k \text{ for a prime } p \text{ and some } k \ge 1 \ 0 & \text{otherwise} \end{cases}
+\Lambda(n) = \begin{cases} \log p & \text{if } n = p^k \text{ for a prime } p \text{ and some } k \ge 1 \\ 0 & \text{otherwise} \end{cases}
 $$
 
 For example $\Lambda(7) = \log 7$, $\Lambda(8) = \Lambda(2^3) = \log 2$, and $\Lambda(6) = 0$, since $6 = 2\cdot 3$ is not a prime power.
@@ -69,7 +71,7 @@ For example $\Lambda(7) = \log 7$, $\Lambda(8) = \Lambda(2^3) = \log 2$, and $\L
 **Theorem.** For $\operatorname{Re} s > 1$, the coefficients of $-\zeta'/\zeta$ are exactly the values $\Lambda(n)$:
 
 $$
-\log\zeta(s) = \sum_p\sum_{k\ge1}\frac{p^{-ks}}{k} \quad\Longrightarrow\quad -\frac{\zeta'(s)}{\zeta(s)} = \sum_p\sum_{k\ge1}\log p,(p^k)^{-s} = \sum_{n\ge1}\frac{\Lambda(n)}{n^s} \qquad (\operatorname{Re} s > 1)
+\log\zeta(s) = \sum_{p\ \text{prime}}\sum_{k\ge1}\frac{p^{-ks}}{k} \quad\Longrightarrow\quad -\frac{\zeta'(s)}{\zeta(s)} = \sum_{p\ \text{prime}}\sum_{k\ge1}\log p,(p^k)^{-s} = \sum_{n\ge1}\frac{\Lambda(n)}{n^s} \qquad (\operatorname{Re} s > 1)
 $$
 
 Proof sketch: take the log of the Euler product and expand each $-\log(1 - p^{-s})$ with $-\log(1 - y) = y + y^2/2 + \cdots$; this gives the first identity. Differentiating in $s$ (written $\zeta'$) brings down a factor $k\log p$ from each term, which cancels the $1/k$ and leaves the weights $\Lambda(n)$.
@@ -81,7 +83,7 @@ The left side is built from all integers, the right side only from primes. This 
 **ψ is a weighted sum of primes.** The running total of $\Lambda$ is the Chebyshev function $\psi$. It counts each prime with weight $\log p$ instead of 1, once for each of its powers $p, p^2, p^3, \ldots$ that fit below $x$:
 
 $$
-\psi(x) = \sum_{n \le x}\Lambda(n) = \sum_{p \le x}\log p \cdot \left\lfloor \frac{\log x}{\log p} \right\rfloor
+\psi(x) = \sum_{n \le x}\Lambda(n) = \sum_{p \le x,\ p\ \text{prime}}\log p \cdot \left\lfloor \frac{\log x}{\log p} \right\rfloor
 $$
 
 The weight $\log p$ is not a choice: it is exactly what the log-derivative of $\zeta$ produces (section 2.2). In these terms the PNT reads as $\psi(x)/x \to 1$.
@@ -113,7 +115,7 @@ Each wave has size $|x^\rho| = x^{\operatorname{Re}\rho}$: **the real part of a 
 
 ### 2.5 Back to π
 
-Let $\theta(x) = \sum_{p \le x} \log p$ count primes only. Then $\pi(x) = \int_2^x d\theta(t)/\log t$ exactly, since each jump of size $\log p$ at a prime $p$ is divided by $\log p$. Replacing $\theta$ by $\psi$ adds the prime powers $p^k$ with $k \ge 2$, which changes the result by only $O(\sqrt{x})$. With $\psi(x) = x + E(x)$ from above, the main term $x$ becomes $\operatorname{Li}(x)$ and $E$ becomes the error term exactly:
+Let $\theta(x) = \sum_{p \le x,\ p\ \text{prime}} \log p$ count primes only. Then $\pi(x) = \int_2^x d\theta(t)/\log t$ exactly, since each jump of size $\log p$ at a prime $p$ is divided by $\log p$. Replacing $\theta$ by $\psi$ adds the prime powers $p^k$ with $k \ge 2$, which changes the result by only $O(\sqrt{x})$. With $\psi(x) = x + E(x)$ from above, the main term $x$ becomes $\operatorname{Li}(x)$ and $E$ becomes the error term exactly:
 
 $$
 \begin{aligned} \pi(x) &= \int_2^x \frac{d\psi(t)}{\log t} + O(\sqrt{x}) \\ e(x) &= \frac{E(x)}{\log x} + \int_2^x \frac{E(t)}{t,\log^2 t},dt + O(\sqrt{x}) \end{aligned}
@@ -151,3 +153,6 @@ Since infinitely many zeros lie on the line, no bound of order $x^{1/2-\delta}$ 
 |RH|$O(\sqrt{x},\log x)$|all on the line $\operatorname{Re} s = \tfrac12$|
 
 Between the two rows lies every case with a zero off the line. A single zero with real part $\beta > \tfrac12$ would make $|e(x)|$ exceed $x^{\beta-\varepsilon}$ infinitely often, for every $\varepsilon > 0$, far above $\sqrt{x},\log x$.
+
+## Footnote
+- RH may have been proven as of 20 Nov, 2026. Impressive.
