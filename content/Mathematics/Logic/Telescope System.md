@@ -31,7 +31,7 @@ The fix statement asserts nothing itself; it changes how later statements are re
 **Scope.** While x is open, every statement that mentions it is a **predicate** on x. The values that satisfy every predicate so far form the **scope** of x:
 
 $$
-\mathrm{scope}(x) = \{ x \in A \mid P_1(x) \wedge \dots \wedge P_n(x) \}
+\mathrm{scope}(x) = {, x \in A \mid P_1(x) \wedge \dots \wedge P_n(x) ,}
 $$
 
 The scope narrows with each predicate and is frozen when x is fixed; its predicates are then the assumptions of x.
@@ -41,7 +41,7 @@ The scope narrows with each predicate and is frozen when x is fixed; its predica
 - after `let d`, a predicate `|x - a| < d` with x real makes d real;
 - `x ∈ S` makes x range over the elements of S.
 
-A block is invalid if a variable's type cannot be determined, or could be more than one: `d > 0` alone fits ℕ, ℤ and ℝ. The type must be clear by the time x is fixed or used in a range proposition (2.2).
+A block is invalid if a variable's type cannot be determined, or could be more than one: `d > 0` alone fits $\mathbb{N}$, $\mathbb{Z}$ and $\mathbb{R}$. The type must be clear by the time x is fixed or used in a range proposition (2.2).
 
 ### 2.2 Statements
 
@@ -58,11 +58,11 @@ Every statement either builds the context or asserts something in it.
 - a **proposition** is a statement whose variables are all closed. It asserts that the statement holds for every value of the closed variables that meets their assumptions;
 - a **range proposition** says how many values are left in an open variable's scope. The variable stays open afterwards: later predicates can narrow it further, and later range propositions can say more.
 
-| Range proposition | Meaning | Logic |
-| --- | --- | --- |
-| `exists x` | At least one value meets every predicate on x so far | ∃ |
-| `not exists x` | No value does | ¬∃ |
-| `unique x` | Exactly one value does | ∃! |
+|Range proposition|Meaning|Logic|
+|---|---|---|
+|`exists x`|At least one value meets every predicate on x so far|$\exists$|
+|`not exists x`|No value does|$\neg\exists$|
+|`unique x`|Exactly one value does|$\exists!$|
 
 When predicates tie two open variables together, count them jointly: `exists p, q`.
 
@@ -92,12 +92,12 @@ The same predicate can be counted first and become an assumption later, as P(x) 
 
 ### 2.3 Rules
 
-**Polarity.** A block states all its judgements together (∧). Each judgement picks up the predicates it depends on:
+**Polarity.** A block states all its judgements together ($\wedge$). Each judgement picks up the predicates it depends on:
 
-- predicates written before `fix x` are assumptions of every later judgement about x (→);
-- predicates on x written up to a range proposition sit inside it (∃, ¬∃ or ∃!).
+- predicates written before `fix x` are assumptions of every later judgement about x ($\to$);
+- predicates on x written up to a range proposition sit inside it ($\exists$, $\neg\exists$ or $\exists!$).
 
-So the build-up example in 2.2 says: (∃x. P(x)) ∧ (∃x. P(x) ∧ Q(x)) ∧ ∀x. (P(x) ∧ Q(x) → R(x)).
+So the build-up example in 2.2 says: $(\exists x., P(x)) \wedge (\exists x., P(x) \wedge Q(x)) \wedge \forall x., (P(x) \wedge Q(x) \to R(x))$.
 
 **Dependency.** Introduction order is quantifier order. In a range proposition about x, the variables closed before x was introduced are given, and the witness may depend on them. Closed variables introduced after x that appear in x's predicates are quantified inside the range proposition, so the witness must work for all of them. Writing such predicates as a nested block, as in Limit, makes this visible.
 
@@ -113,12 +113,12 @@ A composite statement combines several statements into one. It is pure shorthand
 
 **Where Rule.** `S where C₁, …, Cₙ` attaches predicates to the statement S. The conditions are written out as separate predicates around S, where Q stands for `exists`, `not exists` or `unique`:
 
-| Written | Means |
-| --- | --- |
-| `let x : A where C` | `let x : A`, then `C` |
-| `let fix x : A where C` | `let x : A`, then `C`, then `fix x` |
-| `fix x where C` | `C`, then `fix x` |
-| `Q x where C` | `C`, then `Q x` |
+|Written|Means|
+|---|---|
+|`let x : A where C`|`let x : A`, then `C`|
+|`let fix x : A where C`|`let x : A`, then `C`, then `fix x`|
+|`fix x where C`|`C`, then `fix x`|
+|`Q x where C`|`C`, then `Q x`|
 
 - `where` only follows `let`, `fix` or a range proposition.
 - A condition may only mention variables introduced above or by S itself, so `where` never introduces a variable. A nested block inside a condition may introduce variables of its own, since they are local to it.
@@ -126,7 +126,7 @@ A composite statement combines several statements into one. It is pure shorthand
 - The conditions are ordinary predicates. After `exists x where C`, x stays open and C keeps narrowing it.
 - Conditions are separated by commas and may continue on indented lines.
 
-`let fix e : R where e > 0` reads as "for every e > 0", and `exists d where …` as "there is a d such that …". With composite statements, the Limit definition of section 5 shrinks to three statements after the header:
+`let fix e : R where e > 0` reads as "for every $e > 0$", and `exists d where …` as "there is a $d$ such that …". With composite statements, the Limit definition of section 5 shrinks to three statements after the header:
 
 ```text
 def Limit(f : R -> R, a : R, L : R) :=
@@ -164,7 +164,7 @@ def Limit(f : R -> R, a : R, L : R) :=
   exists d
 ```
 
-Reads as: ∀e > 0. ∃d > 0. ∀x. (0 < |x−a| < d → |f(x)−L| < e).
+Reads as: $\forall e > 0.\ \exists d > 0.\ \forall x.\ (0 < |x - a| < d \to |f(x) - L| < e)$.
 
 **Induction.** P ranges over properties of N (Prop is the domain of propositions). The nested block is a predicate on P, and becomes an assumption when P is fixed.
 
@@ -178,7 +178,7 @@ def Induction(N : Type, z : N, S : N -> N) :=
   P(n)
 ```
 
-Reads as: ∀P. P(z) → (∀k. P(k) → P(S(k))) → ∀n. P(n).
+Reads as: $\forall P.\ P(z) \to (\forall k.\ P(k) \to P(S(k))) \to \forall n.\ P(n)$.
 
 **Sum of limits.**
 
@@ -192,7 +192,7 @@ def LimitAdd :=
   Limit(f + g, a, L + M)
 ```
 
-Reads as: ∀f, g. ∀a, L, M. Limit(f, a, L) ∧ Limit(g, a, M) → Limit(f + g, a, L + M).
+Reads as: $\forall f, g.\ \forall a, L, M.\ \mathrm{Limit}(f, a, L) \wedge \mathrm{Limit}(g, a, M) \to \mathrm{Limit}(f + g, a, L + M)$.
 
 **Prime numbers.** A definition may contain several judgements, and all of them must hold.
 
@@ -202,7 +202,7 @@ def Prime(p : N) :=
   { let d : N; d | p; fix d; d = 1 or d = p }
 ```
 
-Reads as: p > 1 ∧ ∀d. (d ∣ p → d = 1 ∨ d = p).
+Reads as: $p > 1 \wedge \forall d.\ (d \mid p \to d = 1 \vee d = p)$.
 
 **Infinitely many primes.**
 
@@ -215,9 +215,9 @@ def InfinitelyManyPrimes :=
   exists p
 ```
 
-Reads as: ∀n. ∃p. p > n ∧ Prime(p).
+Reads as: $\forall n.\ \exists p.\ p > n \wedge \mathrm{Prime}(p)$.
 
-**√2 is irrational.**
+**$\sqrt{2}$ is irrational.**
 
 ```text
 def Sqrt2Irrational :=
@@ -227,7 +227,7 @@ def Sqrt2Irrational :=
   not exists p, q
 ```
 
-Reads as: ¬∃p, q ∈ ℤ. q ≠ 0 ∧ p² = 2q².
+Reads as: $\neg\exists p, q \in \mathbb{Z}.\ q \neq 0 \wedge p^2 = 2q^2$.
 
 **Surjectivity.** a is introduced after b, so it may depend on b.
 
@@ -239,7 +239,7 @@ def Surjective(A : Type, B : Type, f : A -> B) :=
   exists a
 ```
 
-Reads as: ∀b. ∃a. f(a) = b.
+Reads as: $\forall b.\ \exists a.\ f(a) = b$.
 
 **Cantor's theorem.**
 
@@ -251,7 +251,7 @@ def Cantor :=
   not exists f
 ```
 
-Reads as: ∀A. ¬∃f : A → Set(A). Surjective(f).
+Reads as: $\forall A.\ \neg\exists f : A \to \mathrm{Set}(A).\ \mathrm{Surjective}(f)$.
 
 **Multiplicative inverses.**
 
@@ -265,7 +265,7 @@ def Inverse :=
   unique y
 ```
 
-Reads as: ∀x ≠ 0. ∃!y. xy = 1.
+Reads as: $\forall x \neq 0.\ \exists! y.\ xy = 1$.
 
 ## 6. Connection with Lean
 
@@ -273,18 +273,18 @@ Every definition compiles deterministically to a Lean proposition. Lean is based
 
 Composite statements (section 3) are expanded before translation, so they need no rows of their own.
 
-| Telescope | Type theory | Lean |
-| --- | --- | --- |
-| `let x : A` | Variable declaration x : A | Binder `(x : A)` |
-| Predicate P(x) | P : A → Prop | `P x` |
-| Scope of x | Subtype {x : A ∣ P x} | `{x : A // P x}` |
-| `fix x` | Context extension Γ, x : A, h : P x | `∀ x, P x → …` |
-| Proposition φ | Judgement Γ ⊢ φ | `φ`, proved in that context |
-| `exists x` | The subtype is inhabited | `∃ x, P x ∧ …` |
-| `not exists x` | The subtype is empty | `¬ ∃ x, P x ∧ …` |
-| `unique x` | The subtype has one element | `∃! x, …` |
-| Several judgements | Product | `… ∧ …` |
-| `def Name(…) := …` | Definition of a proposition | `def Name … : Prop := …` |
+|Telescope|Type theory|Lean|
+|---|---|---|
+|`let x : A`|Variable declaration $x : A$|Binder `(x : A)`|
+|Predicate $P(x)$|$P : A \to \mathrm{Prop}$|`P x`|
+|Scope of x|Subtype ${x : A \mid P,x}$|`{x : A // P x}`|
+|`fix x`|Context extension $\Gamma, x : A, h : P,x$|`∀ x, P x → …`|
+|Proposition $\varphi$|Judgement $\Gamma \vdash \varphi$|`φ`, proved in that context|
+|`exists x`|The subtype is inhabited|`∃ x, P x ∧ …`|
+|`not exists x`|The subtype is empty|`¬ ∃ x, P x ∧ …`|
+|`unique x`|The subtype has one element|`∃! x, …`|
+|Several judgements|Product|`… ∧ …`|
+|`def Name(…) := …`|Definition of a proposition|`def Name … : Prop := …`|
 
 For example, the build-up in 2.2 and the inverse example become:
 
@@ -294,7 +294,7 @@ For example, the build-up in 2.2 and the inverse example become:
 ∀ x : ℝ, x ≠ 0 → ∃! y : ℝ, x * y = 1
 ```
 
-Two design choices come from this background. In type theory a variable's type is part of its declaration, not a proposition, which is why Telescope keeps types on the `let` statement. And Lean silently defaults numerals to ℕ when a type is missing, which is why Telescope rejects undetermined types instead of guessing.
+Two design choices come from this background. In type theory a variable's type is part of its declaration, not a proposition, which is why Telescope keeps types on the `let` statement. And Lean silently defaults numerals to $\mathbb{N}$ when a type is missing, which is why Telescope rejects undetermined types instead of guessing.
 
 Each judgement becomes a **proof obligation**. A later proof layer will discharge them, procedurally or with AI help, checked by Lean's kernel. Quantifier structure always comes from the rules in 2.3, never from AI, so a translated block means exactly what was written.
 
@@ -316,16 +316,16 @@ Each judgement becomes a **proof obligation**. A later proof layer will discharg
 
 ## Appendix: Keyword reference
 
-| Keyword | Kind | Meaning |
-| --- | --- | --- |
-| `let x : A` | Introduction | x ranges over A; nothing is asserted |
-| `fix x` | Fix | x is now arbitrary but fixed; its predicates become assumptions |
-| `let fix x : A` | Composite statement | Introduces x and fixes it at once |
-| `exists x` | Range proposition | ∃: some value meets every predicate on x so far |
-| `not exists x` | Range proposition | ¬∃: no value does |
-| `unique x` | Range proposition | ∃!: exactly one value does |
-| `;` | Separator | Ends a statement, like a line break |
-| `{ … }` | Nested block | A group of statements used as one statement |
-| `def Name(…) := …` | Definition | Names a proposition |
-| `not`, `=>`, `and`, `or` | Connectives | ¬, →, ∧, ∨ |
-| `S where C` | Composite statement | Attaches predicates C to S (section 3.2) |
+| Keyword                  | Kind                | Meaning                                                         |
+| ------------------------ | ------------------- | --------------------------------------------------------------- |
+| `let x : A`              | Introduction        | x ranges over A; nothing is asserted                            |
+| `fix x`                  | Fix                 | x is now arbitrary but fixed; its predicates become assumptions |
+| `let fix x : A`          | Composite statement | Introduces x and fixes it at once                               |
+| `exists x`               | Range proposition   | $\exists$: some value meets every predicate on x so far         |
+| `not exists x`           | Range proposition   | $\neg\exists$: no value does                                    |
+| `unique x`               | Range proposition   | $\exists!$: exactly one value does                              |
+| `;`                      | Separator           | Ends a statement, like a line break                             |
+| `{ … }`                  | Nested block        | A group of statements used as one statement                     |
+| `def Name(…) := …`       | Definition          | Names a proposition                                             |
+| `not`, `=>`, `and`, `or` | Connectives         | $\neg$, $\to$, $\wedge$, $\vee$                                 |
+| `S where C`              | Composite statement | Attaches predicates C to S (section 3.2)                        |
