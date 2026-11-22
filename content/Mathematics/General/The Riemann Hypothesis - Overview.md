@@ -63,7 +63,7 @@ Proof sketch: expand each factor as $1 + p^{-s} + p^{-2s} + \cdots$ and multiply
 The von Mangoldt function $\Lambda$ marks the primes and their powers, giving each the weight $\log p$:
 
 $$
-\Lambda(n) = \begin{cases} \log p & \text{if } n = p^k \text{ for a prime } p \text{ and some } k \ge 1 \ 0 & \text{otherwise} \end{cases}
+\Lambda(n) = \begin{cases} \log p & \text{if } n = p^k \text{ for a prime } p \text{ and some } k \ge 1 \\ 0 & \text{otherwise} \end{cases}
 $$
 
 For example $\Lambda(7) = \log 7$, $\Lambda(8) = \Lambda(2^3) = \log 2$, and $\Lambda(6) = 0$, since $6 = 2\cdot 3$ is not a prime power.
