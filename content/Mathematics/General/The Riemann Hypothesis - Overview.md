@@ -39,7 +39,7 @@ The two forms are equivalent because $\operatorname{Li}(x)/(x/\log x) \to 1$: by
 To understand $e(x)$, we pass from the primes to a function of a complex variable, $\zeta(s)$, and back. Sections 2.1 to 2.5 each explain one arrow of this route:
 
 $$
-\begin{aligned} \sum_{n\ge1} \frac{1}{n^{s}} &\xrightarrow{\ \text{Euler product}\ } \prod_{p\ \text{prime}} \frac{1}{1-p^{-s}} \xrightarrow{\ \text{log-derivative}\ } \sum_{n\ge1}\frac{\Lambda(n)}{n^{s}} \xrightarrow{\ \text{running sum}\ } \mathcal{L}{\psi(e^u)}(s) = -\frac{\zeta'(s)}{s\zeta(s)} \\ &\xrightarrow{\ \text{analytic continuation of } \zeta,\ \text{inverse Laplace}\ } \psi(x) = x - \sum_{\rho\ \text{nontrivial zeros}} \frac{x^\rho}{\rho} - \cdots \xrightarrow{\ \text{undo the weights}\ } \pi(x) = \operatorname{Li}(x) + e(x) \end{aligned}
+\begin{aligned} \sum_{n\ge1} \frac{1}{n^{s}} &\xrightarrow{\ \text{Euler product}\ } \prod_{p\ \text{prime}} \frac{1}{1-p^{-s}} \xrightarrow{\ \text{log-derivative}\ } \sum_{n\ge1}\frac{\Lambda(n)}{n^{s}} \xrightarrow{\ \text{running sum}\ } \mathcal{L}\{\psi(e^u)\}(s) = -\frac{\zeta'(s)}{s\zeta(s)} \\ &\xrightarrow{\ \text{analytic continuation of } \zeta,\ \text{inverse Laplace}\ } \psi(x) = x - \sum_{\rho\ \text{nontrivial zeros}} \frac{x^\rho}{\rho} - \cdots \xrightarrow{\ \text{undo the weights}\ } \pi(x) = \operatorname{Li}(x) + e(x) \end{aligned}
 $$
 
 ### 2.1 The zeta function and the Euler product
@@ -88,12 +88,12 @@ $$
 
 The weight $\log p$ is not a choice: it is exactly what the log-derivative of $\zeta$ produces (section 2.2). In these terms the PNT reads as $\psi(x)/x \to 1$.
 
-Now measure $x$ on a log scale, $u = \log x$. Then $n^{-s} = e^{-su}$, so sums such as $\sum \Lambda(n) n^{-s}$ become Laplace transforms. The Laplace transform turns a signal $f(u)$ into a function of $s$: $\mathcal{L}{f}(s) = \int f(u) e^{-su} du$. The basic pair is $\mathcal{L}{e^{au}}(s) = 1/(s - a)$: an exponential term in the signal corresponds to a simple pole in the transform. Conversely, inverting a transform recovers one term $c e^{au}$ for each pole $a$, where $c$ is the residue there, so $\operatorname{Re} a$ is that term's growth rate.
+Now measure $x$ on a log scale, $u = \log x$. Then $n^{-s} = e^{-su}$, so sums such as $\sum \Lambda(n) n^{-s}$ become Laplace transforms. The Laplace transform turns a signal $f(u)$ into a function of $s$: $\mathcal{L}\{f(u)\}(s) = \int f(u) e^{-su} du$. The basic pair is $\mathcal{L}\{e^{au}\}(s) = 1/(s - a)$: an exponential term in the signal corresponds to a simple pole in the transform. Conversely, inverting a transform recovers one term $c e^{au}$ for each pole $a$, where $c$ is the residue there, so $\operatorname{Re} a$ is that term's growth rate.
 
 **Theorem.** For $\operatorname{Re} s > 1$, the transform of $\psi(e^u)$ is $\zeta$'s log-derivative divided by $s$; the factor $1/s$ appears because $\psi$ is a running sum:
 
 $$
-\mathcal{L}{\psi(e^u)}(s) = -\frac{1}{s}\frac{\zeta'(s)}{\zeta(s)}
+\mathcal{L}\{\psi(e^u)\}(s) = -\frac{1}{s}\frac{\zeta'(s)}{\zeta(s)}
 $$
 
 Near a zero $\rho$, $\zeta(s) \approx c(s - \rho)$, so $-\zeta'/\zeta \approx -1/(s - \rho)$: a zero of $\zeta$ is a simple pole of $-\zeta'/\zeta$. Inverting the transform turns each pole into a term of $\psi$, so **every zero of ζ becomes a term in ψ**.
