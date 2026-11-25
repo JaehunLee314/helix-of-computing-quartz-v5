@@ -17,7 +17,7 @@ Prob[S ~ D^m](|EmpError(S, h) - Error(D, h)| > e) <= 2 * exp(-2 * e^2 * m)
 ```
 let fix X : Type
 let fix P : Measure(X) where IsProbabilityMeasure(P), NoAtoms(P)
-def D := Measure.map(lambda x: (x, true), P)      # every label is 1
+def D := Measure.map(lambda x: (x, true), P) # every label is 1
 let fix m in N where m >= 1
 Prob[S ~ D^m]({
   # 1 only on sample points
