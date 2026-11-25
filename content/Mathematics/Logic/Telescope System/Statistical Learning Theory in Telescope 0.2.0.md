@@ -11,7 +11,7 @@ The text follows Shalev-Shwartz and Ben-David, *Understanding Machine Learning*,
 | $S = ((x_1, y_1), \dots, (x_m, y_m))$ | `S : (X × Bool)^m`, entries `S(i)` for $i$ in $0$ to $m - 1$ | Training sample |
 | $\mathbb{P}_{S \sim \mathcal{D}^m}[\dots]$ | `Prob[S ~ D^m](…)` | Probability over i.i.d. samples |
 | $L_{\mathcal{D}}(h)$, $L_{(\mathcal{D},f)}(h)$, $L_S(h)$ | `Error(D, h)`, `ErrorF(D, f, h)`, `EmpError(S, h)` | True, realizable, empirical error |
-| $A : \bigcup_m (\mathcal{X} \times \{0, 1\})^m \to \{0, 1\}^{\mathcal{X}}$ | `A : (m : N) -> (X × Bool)^m -> (X -> Bool)`; with $m$ fixed, `let learn = A(m)` | Learning algorithm |
+| $A : \bigcup_m (\mathcal{X} \times \{0, 1\})^m \to \{0, 1\}^{\mathcal{X}}$ | `A : (m : N) -> (X × Bool)^m -> (X -> Bool)`; with $m$ fixed, `def learn := A(m)` | Learning algorithm |
 | $m_{\mathcal{H}}(\varepsilon, \delta)$ | `mH : R -> R -> N`, applied as `mH(e, d)` | Sample complexity |
 | $\mathrm{VCdim}(\mathcal{H})$ | `VCdim(H) : ENat` | VC dimension, possibly $\infty$ |
 
@@ -96,7 +96,7 @@ def PACLearner<X : Type>(H : Set(X -> Bool), mH : R -> R -> N,
   let fix D : Measure(X) where IsProbabilityMeasure(D)
   let fix f : X -> Bool where Realizable(H, D, f)
   let fix m in N where m >= mH(e, d), m >= 1
-  let learn = A(m)
+  def learn := A(m)
   Prob[x ~ D^m](ErrorF(D, f, learn(Label(x, f))) <= e) >= 1 - d
 }
 
@@ -118,8 +118,8 @@ def AgnosticPACLearner<X : Type>(H : Set(X -> Bool), mH : R -> R -> N,
   let fix e, d in R where 0 < e < 1, 0 < d < 1
   let fix D : Measure(X × Bool) where IsProbabilityMeasure(D)
   let fix m in N where m >= mH(e, d), m >= 1
-  let learn = A(m)
-  let best = inf[g in H](Error(D, g))
+  def learn := A(m)
+  def best := inf[g in H](Error(D, g))
   Prob[S ~ D^m](Error(D, learn(S)) <= best + e) >= 1 - d
 }
 
@@ -243,7 +243,7 @@ AgnosticPACLearner(H, lambda e, d: ceil(2 * log(2 * card(H) / d) / e^2), A)
 let fix X : Type
 let fix A : (m : N) -> (X × Bool)^m -> (X -> Bool)
 let fix m in N where { let C : Finset(X) where card(C) > 2 * m; exists C }
-let learn = A(m)
+def learn := A(m)
 let D : Measure(X × Bool) where IsProbabilityMeasure(D),
     { let f : X -> Bool where Error(D, f) = 0; exists f },
     Prob[S ~ D^m](Error(D, learn(S)) >= 1/8) >= 1/7
@@ -298,12 +298,12 @@ def FiniteVCdim<X : Type>(H : Set(X -> Bool)) {
 **Examples (section 6.3).** Thresholds $h_a(x) = \mathbb{1}[x < a]$ have VC dimension 1: any one point is shattered, but no threshold labels the smaller of two points 0 and the larger 1. Intervals $h_{(a,b)}(x) = \mathbb{1}[a < x < b]$ have VC dimension 2: no interval labels three points 1, 0, 1. A proposition becomes a `Bool` where one is expected, so each hypothesis is just its condition.
 
 ```text
-let Thresholds = Set[a in R](lambda x: x < a)
+def Thresholds := Set[a in R](lambda x: x < a)
 VCdim(Thresholds) = 1
 ```
 
 ```text
-let Intervals = Set[a, b in R where a < b](lambda x: a < x < b)
+def Intervals := Set[a, b in R where a < b](lambda x: a < x < b)
 VCdim(Intervals) = 2
 ```
 
@@ -383,3 +383,129 @@ exists C1, C2
 ```
 
 The two blocks follow the spec's rule from section 3.3: a `fix` after an `exists` keeps the conditions above it, so the lower bound needs a new block. The `d >= 1` is not in the book; with $d = 0$ the class has at most one hypothesis, a single sample suffices, and the lower bound cannot hold. The realizable part has the same shape with bounds $C_1 (d + \log(1/\delta))/\varepsilon$ and $C_2 (d \log(1/\varepsilon) + \log(1/\delta))/\varepsilon$, and uniform convergence repeats the agnostic bounds.
+
+## 7. What decides learnability
+
+The only thing that decides it is the class $\mathcal{H}$, and only through its VC dimension. The size of $\mathcal{X}$ and the size of $\mathcal{H}$ matter only because they bound the VC dimension. The reason is line order: the learner is chosen before the distribution, so it must work for every $\mathcal{D}$ at once, and the one thing left to adjust is $\mathcal{H}$.
+
+**Why $\mathcal{D}$ gives no freedom.** In the definition, the learner and its sample size come first and the distribution is fixed after them:
+
+```text
+let mH, A                  # chosen once, knowing only H
+let fix e, d, D, m         # then every distribution, every e and d
+Prob[S ~ D^m](Error(D, A(m)(S)) <= best + e) >= 1 - d
+exists mH, A
+```
+
+Swap the order and learning becomes trivial. If D is fixed first, the "learner" may depend on D and can simply output the best hypothesis for D without looking at the sample:
+
+```text
+let fix X : Type
+let fix H : Set(X -> Bool)
+let fix D : Measure(X × Bool) where IsProbabilityMeasure(D)
+let fix e in R where e > 0
+let h in H where Error(D, h) <= inf[g in H](Error(D, g)) + e
+exists h                   # true for every non-empty H: no data is needed
+```
+
+So every learnability result is about one thing: whether a single learner can serve every $\mathcal{D}$ at once, given only $\mathcal{H}$.
+
+**Three results, with only the assumption on $\mathcal{H}$ changed.** Every other line is the same.
+
+```text
+# 1. Finite class: learnable                      (Corollary 4.6)
+let fix X : Type
+let fix H : Set(X -> Bool) where Finite(H)
+AgnosticPACLearnable(H)
+```
+
+```text
+# 2. Every function on an infinite domain: not learnable, even realizable   (Corollary 5.2)
+let fix X : Type where Infinite(X)
+def H := Set[h : X -> Bool](h)
+not PACLearnable(H)
+```
+
+```text
+# 3. Infinite domain, finite VC dimension: learnable   (Theorem 6.7)
+let fix X : Type where Infinite(X)
+let fix H : Set(X -> Bool) where FiniteVCdim(H)
+AgnosticPACLearnable(H)
+```
+
+All three are cases of one statement, the Fundamental Theorem with nothing assumed about $\mathcal{X}$:
+
+```text
+let fix X : Type
+let fix H : Set(X -> Bool)
+FiniteVCdim(H) <=> AgnosticPACLearnable(H) <=> PACLearnable(H)
+```
+
+- Result 1 holds because a finite class has finite VC dimension, at most $\log_2 \lvert\mathcal{H}\rvert$ (section 5).
+- Result 2 holds because the class of all functions shatters every finite C, so its VC dimension is $\lvert\mathcal{X}\rvert$, which is $\infty$ when $\mathcal{X}$ is infinite.
+- Result 3 is the theorem itself. Thresholds on R are an example: $\mathcal{X}$ and $\mathcal{H}$ are both infinite, but the VC dimension is 1.
+
+With a finite $\mathcal{X}$ even the class of all functions is learnable, because its VC dimension is $\lvert\mathcal{X}\rvert$. It just needs about $\lvert\mathcal{X}\rvert$ samples, so being infinite is what breaks it, not being large:
+
+```text
+let fix X : Type where Finite(X)
+VCdim(Set[h : X -> Bool](h)) = card(X)
+```
+
+**What "not learnable" means in result 2.** It does not mean a particular $\mathcal{D}$ cannot be learned. It means no single learner and sample size work for every realizable $\mathcal{D}$. No Free Lunch (section 4) makes this precise: whatever $A$ and $m$ you pick, there is a realizable $\mathcal{D}$, built on $2m$ points that the sample cannot cover, for which A has error at least $1/8$ with probability at least $1/7$. What fails is driving the error below every $\varepsilon$ with one sample size for all $\mathcal{D}$, not driving it below $\varepsilon$ for some fixed $\mathcal{D}$.
+
+**How a smaller $\mathcal{H}$ helps find the best hypothesis.** Learning is a search in $\mathcal{H}$, and the sample narrows it. VC dimension measures how far the narrowing reaches beyond the points actually seen. It takes three steps.
+
+*1. The sample narrows $\mathcal{H}$, but only where it looked.* The hypotheses that agree with the sample form the version space:
+
+```text
+def VersionSpace<X : Type, m : N>(H : Set(X -> Bool), S : (X × Bool)^m) -> Set(X -> Bool) {
+  return Set[h in H where { let fix i : Fin(m); h(S(i).1) = S(i).2 }](h)
+}
+```
+
+For the class of all functions, the version space stays free at every unseen point, whatever the sample:
+
+```text
+let fix X : Type
+def H := Set[h : X -> Bool](h)
+let fix m in N
+let fix S : (X × Bool)^m where { let fix i, j : Fin(m) where S(i).1 = S(j).1; S(i).2 = S(j).2 }   # no point labelled both ways
+let fix x : X where { let fix i : Fin(m); x != S(i).1 }   # an unseen point
+let fix b : Bool
+let h in VersionSpace(H, S) where h(x) = b
+exists h                                                # both labels survive
+```
+
+The search space shrinks on the m seen points and not at all elsewhere. For thresholds it is different: seeing label 1 at x forces 1 at every point left of x, so the sample also settles points it never contained.
+
+*2. Why that matters for finding the best $h$.* The true error $L_{\mathcal{D}}(h)$ is never visible, only the empirical error $L_S(h)$. ERM minimizes the visible one, which works only if $L_S$ is close to $L_{\mathcal{D}}$ for every $h$ in $\mathcal{H}$ at once. That is uniform convergence, and Lemma 4.2 turns it into a guarantee in three steps, for every h in $\mathcal{H}$:
+
+```text
+Error(D, hS) <= EmpError(S, hS) + e/2    # S is e/2-representative
+             <= EmpError(S, h)   + e/2    # hS minimizes EmpError
+             <= Error(D, h)      + e      # S is e/2-representative
+```
+
+So ERM lands within $\varepsilon$ of the best in $\mathcal{H}$. With all functions this fails: some $h$ has $L_S = 0$ by memorizing $S$ while being arbitrary off it, and ERM cannot tell it from a good one.
+
+*3. Where VC dimension enters.* Uniform convergence is a union bound over $\mathcal{H}$, which looks hopeless for an infinite $\mathcal{H}$. But on $m$ points $\mathcal{H}$ behaves in only $\tau(m)$ distinct ways, the number of labellings it produces. Sauer's lemma (section 6) bounds that count:
+
+| VC dimension | Distinct behaviours on $m$ points, $\tau(m)$ | Growth |
+| --- | --- | --- |
+| $d$, finite | at most $\sum_{i=0}^{d} \binom{m}{i}$, about $m^d$ | Polynomial |
+| $\infty$ | can be $2^m$ | Exponential |
+
+The chance that one fixed h is misestimated by more than $\varepsilon$ falls like $e^{-\varepsilon^2 m}$. Multiplied by about $m^d$ behaviours it still goes to 0, so the sample becomes representative for all of $\mathcal{H}$; multiplied by $2^m$ it does not. Finite VC dimension is therefore exactly the condition under which minimizing what you can see becomes minimizing what you cannot.
+
+Two limits remain. "Best" means best in $\mathcal{H}$, so a poor $\mathcal{H}$ still gives a poor answer, which is the bias below. And VC dimension says nothing about whether ERM can be computed efficiently, which the book treats separately in chapter 8.
+
+**The price of a small $\mathcal{H}$.** Agnostic learning only promises to come within $\varepsilon$ of `best`, the error of the best hypothesis in $\mathcal{H}$. Shrinking $\mathcal{H}$ makes learning easier but can make `best` worse. The book calls this the bias-complexity tradeoff (section 5.2):
+
+```text
+def best := inf[g in H](Error(D, g))                  # approximation error: set by H and D
+Error(D, learn(S)) = best + (Error(D, learn(S)) - best)
+#                    ^ bias                ^ estimation error: what agnostic PAC controls
+```
+
+So the choice of $\mathcal{H}$ is the only lever, and it pulls two ways: a smaller VC dimension lowers the estimation error for a given m, and a richer $\mathcal{H}$ lowers the approximation error. Agnostic PAC guarantees the first and says nothing about the second.
