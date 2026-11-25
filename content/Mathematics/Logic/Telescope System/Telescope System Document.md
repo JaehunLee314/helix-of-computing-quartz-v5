@@ -157,7 +157,7 @@ def Surjective<A : Type, B : Type>(f : A -> B) {
 }
 ```
 
-**Named terms.** `def D := t` is a definition with no parameters and no body to run: it names the term t. It introduces no variable, and like every `def` it captures its context, so t may mention variables fixed above it. Section 3.1 introduces it; `def W := Fin(6) × Fin(6)` in section 7 is one use. `:=` is kept for definitions, and `=` for propositions.
+**Named terms.** `def D := t` is a definition with no parameters and no body to run: it names the term t. It introduces no variable, and like every `def` it captures its context, so t may mention variables fixed above it. Section 3.1 introduces it; `def W := Fin(6) × Fin(6)` in section 7 is one use. `def D : T := t` gives the named term a type. t is read with T expected, so the casts apply: `def h : X -> Bool := lambda x: x in S`. `:=` is kept for definitions, and `=` for propositions.
 
 **Terms and files.** `lambda n: s(phi(n))` is a function term, and `if c then a else b` is a term. A lambda may carry conditions, which make it partial: `lambda h where h != 0: (f(x + h) - f(x))/h` is the difference quotient, defined for every h except 0. `lambda e, d: t` is short for `lambda e: lambda d: t`. Passing a partial function is allowed when every place that applies it stays inside its domain, which is an obligation. A file's top-level lines are its theorem; several theorems in one file are each wrapped in braces.
 
@@ -186,7 +186,7 @@ card(Set[s : Perm(Fin(n)) where Derangement(s)](s))
 
 ## 6. Types and numbers
 
-- **Basic types.** `Prop` is the type of propositions and `Type` the type of types. A set is a function to `Prop`, so `Set(A)` is `A -> Prop` and `x in S` means S(x); `Finset(A)` is the finite subsets. `Bool` has `true` and `false`, and a proposition becomes a Bool wherever a Bool is expected.
+- **Basic types.** `Prop` is the type of propositions and `Type` the type of types. A set is a function to `Prop`, so `Set(A)` is `A -> Prop` and `x in S` means S(x); `Finset(A)` is the finite subsets. `Bool` has `true` and `false`, and a proposition becomes a Bool wherever a Bool is expected. The cast passes through function results: an `A -> Prop` (a `Set(A)`) becomes an `A -> Bool` wherever an `A -> Bool` is expected, so `Set[a in R](lambda x: x < a)` is a `Set(R -> Bool)`.
 - **Building types.** `A -> B` groups to the right, and a dependent function type names its argument: `(m : N) -> R^m`. `A × B` has components `z.1` and `z.2`. Pairs are written `(a, b)`. A set may stand for a type, as in `f : D -> D`.
 - **Tuples.** `A^n` is `Fin(n) -> A`, where `Fin(n)` is $0$ to $n - 1$. So an entry is an application, `v(i)`; two tuples are equal when every entry is; `lambda i: t` builds one; and a matrix is a tuple of rows, `M : (R^n)^m` with entries `M(i)(j)`. `R^n` carries the Euclidean norm.
 - **Numbers.** $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}$, written N, Z, Q, R, C, and these names are reserved. A number is cast upward automatically where a larger type is expected, and a `Finset` where a `Set` is. A value of a set used as a type is an element of the larger type: for `C : Finset(X)` and `c : C`, c is an X wherever an X is expected. Types are never guessed: a numeral whose type nothing determines is an error. Casting is as in Lean: arithmetic happens in the largest number type among its parts, and where nothing says which, you write the type: `(card(S) : Q) / card(W)`.
@@ -441,7 +441,7 @@ Translation runs both ways and is deterministic once the block is written: the o
 | --- | --- |
 | `let x : T`, `let x in S` | Introduce x with type T, or in S |
 | `S where C` | Attach condition C to the line S |
-| `def D := t` | Name a term |
+| `def D := t`, `def D : T := t` | Name a term |
 | `fix x`, `let fix x in S` | From here on, x is any value generated ($\forall$) |
 | A line about an unfixed x | A condition: narrows what x takes |
 | `exists x`, `not exists x`, `unique x` | $\exists$, $\lnot\exists$, $\exists!$ over what is generated |

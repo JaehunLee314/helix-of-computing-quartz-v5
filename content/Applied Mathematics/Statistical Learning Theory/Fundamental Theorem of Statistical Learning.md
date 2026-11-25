@@ -9,7 +9,7 @@ let fix h : X -> Bool # fixed before the sample is drawn
 let fix e in R where e > 0
 let fix m in N where m >= 1
 # Hoeffding
-Prob[S ~ D^m](|EmpError(S, h) - Error(D, h)| > e) <= 2 * exp(-2 * e^2 * m)
+Prob[S ~ D^m](|EmpError(S, h) - Error(D, h)| > e) <= 2 * exp(-2 * e^2 * m) 
 ```
 
 ## Step 2. Build h using S
@@ -20,8 +20,9 @@ let fix P : Measure(X) where IsProbabilityMeasure(P), NoAtoms(P)
 def D := Measure.map(lambda x: (x, true), P) # every label is 1
 let fix m in N where m >= 1
 Prob[S ~ D^m]({
-  # 1 only on sample points
-  def hS := lambda x: { let i : Fin(m) where S(i).1 = x; exists i }
+  # 1 only on sample points; the type makes the proposition a Bool
+  # labels are ignored, which is fine because every label is 1
+  def hS : X -> Bool := lambda x: { let i : Fin(m) where S(i).1 = x; exists i }
   # perfect on S, wrong almost everywhere
   EmpError(S, hS) = 0 and Error(D, hS) = 1
 }) = 1

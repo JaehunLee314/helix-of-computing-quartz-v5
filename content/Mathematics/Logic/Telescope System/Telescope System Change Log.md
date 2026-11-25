@@ -14,7 +14,7 @@ Changes to the Telescope spec, newest first. Each entry lists the changes from t
 
 - `let x in S` is added as the readable form of `let x : T`; with `S : Set(A)` it means `let x : A`, then `x in S`.
 - `where` attaches conditions to the line it ends, as in `let fix e in R where e > 0` or `exists d where …`.
-- `def D := t` names a term, where `:=` means "is defined as", as in Lean. `=` is always a proposition and `let` only introduces variables, so all naming is done by `def`; like any `def`, it captures its context and may mention fixed variables. `let x : T where x = t` keeps its meaning as a variable with one value. Section 3.1 introduces the form, and a "Named terms" paragraph in section 4 describes it as a definition with no parameters.
+- `def D := t` names a term, where `:=` means "is defined as", as in Lean. `=` is always a proposition and `let` only introduces variables, so all naming is done by `def`; like any `def`, it captures its context and may mention fixed variables. `let x : T where x = t` keeps its meaning as a variable with one value. Section 3.1 introduces the form, and a "Named terms" paragraph in section 4 describes it as a definition with no parameters. `def D : T := t` gives the named term a type, and `t` is read with `T` expected, so the usual casts apply.
 - Every term must be defined where it is used (`1/x` needs `x != 0` above it).
 
 **Asserting and formulas**
@@ -42,7 +42,7 @@ Changes to the Telescope spec, newest first. Each entry lists the changes from t
 
 **Types and numbers**
 
-- `Bool` is added, and a proposition becomes a `Bool` wherever one is expected. Pairs are written `(a, b)`, with components `z.1` and `z.2`.
+- `Bool` is added, and a proposition becomes a `Bool` wherever one is expected. The cast passes through function results, so a `Set(A)` becomes an `A -> Bool` where one is expected. Pairs are written `(a, b)`, with components `z.1` and `z.2`.
 - `A^n` is `Fin(n) -> A`, indexed from 0, so tuple entries are applications and tuples are built with `lambda`. A matrix is a tuple of rows. `R^n` carries the Euclidean norm.
 - Numbers form the tower $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}$ (written N, Z, Q, R, C), with reserved names and automatic upward casts. A `Finset` is cast to a `Set`, and an element of a set used as a type is cast to the larger type. Types are never guessed.
 - Casting is as in Lean: arithmetic happens in the largest number type among its parts, and where nothing determines it the type is written, as in `(card(S) : Q) / card(W)`.
