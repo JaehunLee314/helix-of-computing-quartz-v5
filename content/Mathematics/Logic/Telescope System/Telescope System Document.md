@@ -37,11 +37,9 @@ def Limit(f : R -> R, a : R, L : R) {
   exists d
 }
 ```
-
-```latex
+$$
 \forall e > 0.\ \exists d > 0.\ \forall x.\ (0 < |x - a| < d \to |f(x) - L| < e)
-```
-
+$$
 ```text
 def Limit (f : ℝ → ℝ) (a L : ℝ) : Prop :=
   ∀ e > 0, ∃ d > 0, ∀ x, 0 < |x - a| ∧ |x - a| < d → |f x - L| < e
