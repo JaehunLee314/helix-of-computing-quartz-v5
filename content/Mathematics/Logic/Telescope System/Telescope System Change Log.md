@@ -14,7 +14,7 @@ Changes to the Telescope spec, newest first. Each entry lists the changes from t
 
 - `let x in S` is added as the readable form of `let x : T`; with `S : Set(A)` it means `let x : A`, then `x in S`.
 - `where` attaches conditions to the line it ends, as in `let fix e in R where e > 0` or `exists d where …`.
-- `let D = t` names a term without introducing a new variable.
+- `def D := t` names a term, where `:=` means "is defined as", as in Lean. `=` is always a proposition and `let` only introduces variables, so all naming is done by `def`; like any `def`, it captures its context and may mention fixed variables. `let x : T where x = t` keeps its meaning as a variable with one value. Section 3.1 introduces the form, and a "Named terms" paragraph in section 4 describes it as a definition with no parameters.
 - Every term must be defined where it is used (`1/x` needs `x != 0` above it).
 
 **Asserting and formulas**

@@ -37,9 +37,11 @@ def Limit(f : R -> R, a : R, L : R) {
   exists d
 }
 ```
-$$
+
+```latex
 \forall e > 0.\ \exists d > 0.\ \forall x.\ (0 < |x - a| < d \to |f(x) - L| < e)
-$$
+```
+
 ```text
 def Limit (f : ℝ → ℝ) (a L : ℝ) : Prop :=
   ∀ e > 0, ∃ d > 0, ∀ x, 0 < |x - a| ∧ |x - a| < d → |f x - L| < e
@@ -78,7 +80,7 @@ In Continuous, x is fixed before d appears, so d may depend on x. In UniformlyCo
 
 ### 3.1 Introducing
 
-`let x : T` introduces x with type T, and `let x in S` is the readable form, for a type or a set: with `S : Set(A)` it means `let x : A`, then `x in S`. Several variables may share a line, and a later type may mention an earlier variable: `let n in N, v : R^n`. `where` attaches conditions to the line it ends, so `let fix e in R where e > 0` reads "for every $e > 0$" and `exists d where …` reads "there is a d such that …". `let D = t` names a term; it introduces nothing new.
+`let x : T` introduces x with type T, and `let x in S` is the readable form, for a type or a set: with `S : Set(A)` it means `let x : A`, then `x in S`. Several variables may share a line, and a later type may mention an earlier variable: `let n in N, v : R^n`. `where` attaches conditions to the line it ends, so `let fix e in R where e > 0` reads "for every $e > 0$" and `exists d where …` reads "there is a d such that …". `def D := t` names a term; it introduces no variable. `=` stays a proposition that ties values together, and `:=` means "is defined as", as in Lean.
 
 Every variable needs exactly one type by the time it is fixed or counted, and every term must be defined where it is used: `1/x` needs `x != 0` above it.
 
@@ -156,6 +158,8 @@ def Surjective<A : Type, B : Type>(f : A -> B) {
   exists a
 }
 ```
+
+**Named terms.** `def D := t` is a definition with no parameters and no body to run: it names the term t. It introduces no variable, and like every `def` it captures its context, so t may mention variables fixed above it. Section 3.1 introduces it; `def W := Fin(6) × Fin(6)` in section 7 is one use. `:=` is kept for definitions, and `=` for propositions.
 
 **Terms and files.** `lambda n: s(phi(n))` is a function term, and `if c then a else b` is a term. A lambda may carry conditions, which make it partial: `lambda h where h != 0: (f(x + h) - f(x))/h` is the difference quotient, defined for every h except 0. `lambda e, d: t` is short for `lambda e: lambda d: t`. Passing a partial function is allowed when every place that applies it stays inside its domain, which is an obligation. A file's top-level lines are its theorem; several theorems in one file are each wrapped in braces.
 
@@ -332,7 +336,7 @@ k and p are introduced after u and w, so the path may depend on its endpoints.
 *Probability*, as measure theory. An event is a set, `Prob(P, S)` is its probability as a real number, and an expectation is `Integral(P, X)`. Two dice sum to 7 with probability 1/6:
 
 ```text
-let W = Fin(6) × Fin(6)
+def W := Fin(6) × Fin(6)
 (card(Set[w : W where w.1 + w.2 + 2 = 7](w)) : Q) / card(W) = 1/6
 ```
 
@@ -350,7 +354,7 @@ Prob(P, Set[w : W where X(w) >= t](w)) <= Integral(P, X) / t
 let fix W : Type
 let fix P : Measure(W) where IsProbabilityMeasure(P)
 let fix X : N -> W -> R where IID(X, P), Integrable(X(0), P)
-let A = Set[w : W where SeqLimit(lambda n: sum[i in 0...n](X(i)(w)) / (n + 1), Integral(P, X(0)))](w)
+def A := Set[w : W where SeqLimit(lambda n: sum[i in 0...n](X(i)(w)) / (n + 1), Integral(P, X(0)))](w)
 Prob(P, A) = 1
 ```
 
@@ -439,7 +443,7 @@ Translation runs both ways and is deterministic once the block is written: the o
 | --- | --- |
 | `let x : T`, `let x in S` | Introduce x with type T, or in S |
 | `S where C` | Attach condition C to the line S |
-| `let D = t` | Name a term |
+| `def D := t` | Name a term |
 | `fix x`, `let fix x in S` | From here on, x is any value generated ($\forall$) |
 | A line about an unfixed x | A condition: narrows what x takes |
 | `exists x`, `not exists x`, `unique x` | $\exists$, $\lnot\exists$, $\exists!$ over what is generated |
