@@ -34,6 +34,16 @@ Prob[S ~ D^m]({
 
 For hS the bad-sample probability is 1, for every m. Step 1's bound only covers an h fixed before S is drawn, so we need a bound that covers every h in H at once.
 
+From now on use the following definition.
+
+```
+def Representative<X : Type, m : N where m >= 1>(S : (X × Bool)^m, H : Set(X -> Bool), D : Measure(X × Bool), e : R) {
+  let fix h in H
+  |EmpError(S, h) - Error(D, h)| <= e
+}
+```
+
+
 ## Step 3. One D, finite H
 
 ```
