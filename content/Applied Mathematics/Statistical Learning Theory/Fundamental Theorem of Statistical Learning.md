@@ -92,20 +92,6 @@ Prob[S ~ D^m](not Representative(S, H, D, e)) <= 4 * Growth(H, 2 * m) * exp(-e^2
 
 card(H) becomes Growth(H, 2m). The count can now grow with m, so the bound goes to 0 only if the decay outruns it.
 
-## Step 4. Infinite H: count behaviours
-
-```
-let fix X : Type
-let fix D : Measure(X × Bool) where IsProbabilityMeasure(D)
-let fix H : Set(X -> Bool)
-let fix e in R where e > 0
-let fix m in N where m >= 1
-# ghost sample: on 2m points, H acts like only Growth(H, 2m) functions
-Prob[S ~ D^m](not Representative(S, H, D, e)) <= 4 * Growth(H, 2 * m) * exp(-e^2 * m / 8)
-```
-
-card(H) becomes Growth(H, 2m). The count can now grow with m, so the bound goes to 0 only if the decay outruns it.
-
 ## Step 5. Finite VC dimension
 
 ```
