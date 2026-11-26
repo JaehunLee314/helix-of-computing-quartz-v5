@@ -37,7 +37,12 @@ For hS the bad-sample probability is 1, for every m. Step 1's bound only covers 
 From now on we use the following definition.
 
 ```
-def Representative<X : Type, m : N where m >= 1>(S : (X × Bool)^m, H : Set(X -> Bool), D : Measure(X × Bool), e : R) {
+def Representative<X : Type, m : N where m >= 1>(
+  S : (X × Bool)^m, 
+  H : Set(X -> Bool),
+  D : Measure(X × Bool), 
+  e : R
+) {
   let fix h in H
   |EmpError(S, h) - Error(D, h)| <= e
 }
