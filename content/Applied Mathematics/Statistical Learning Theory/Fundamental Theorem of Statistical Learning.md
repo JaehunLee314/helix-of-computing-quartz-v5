@@ -3,7 +3,7 @@
 Every step answers one question: given accuracy e and sample size m, how likely is a bad sample?
 The answer is the right-hand side of the `Prob` line. Watch which variables it mentions as the conditions loosen.
 
-## Step 1. One D, one h
+## Step 1. One h
 
 ```
 let fix X : Type
@@ -12,7 +12,7 @@ let fix h : X -> Bool # fixed before the sample is drawn
 let fix e in R where e > 0
 let fix m in N where m >= 1
 # Hoeffding
-Prob[S ~ D^m](|EmpError(S, h) - Error(D, h)| > e) <= 2 * exp(-2 * e^2 * m) 
+Prob[S ~ D^m](|EmpError(S, h) - Error(D, h)| > e) <= 2 * exp(-2 * e^2 * m)
 ```
 
 The bound mentions only e and m, not D or h.
@@ -38,9 +38,9 @@ From now on we use the following definition.
 
 ```
 def Representative<X : Type, m : N where m >= 1>(
-  S : (X × Bool)^m, 
+  S : (X × Bool)^m,
   H : Set(X -> Bool),
-  D : Measure(X × Bool), 
+  D : Measure(X × Bool),
   e : R
 ) {
   let fix h in H
@@ -48,8 +48,7 @@ def Representative<X : Type, m : N where m >= 1>(
 }
 ```
 
-
-## Step 3. One D, finite H
+## Step 3. Finite H
 
 ```
 let fix X : Type
@@ -61,57 +60,43 @@ let fix m in N where m >= 1
 Prob[S ~ D^m](not Representative(S, H, D, e)) <= 2 * card(H) * exp(-2 * e^2 * m)
 ```
 
-Loosening h to H multiplies the bound by card(H).
+Loosening h to H multiplies the bound by card(H). The bound still doesn't mention D, so one formula serves every distribution. This is what later lets a single sample size work without knowing D.
 
-## Step 4. Any D
+## Step 4. Infinite H: count behaviours
 
 ```
 let fix X : Type
-let fix H : Set(X -> Bool) where Finite(H), card(H) >= 1
-let fix e in R where e > 0
-let fix m in N where m >= 1
-# moved below m
 let fix D : Measure(X × Bool) where IsProbabilityMeasure(D)
-Prob[S ~ D^m](not Representative(S, H, D, e)) <= 2 * card(H) * exp(-2 * e^2 * m)
-```
-
-The bound is unchanged, so loosening D costs nothing: D never appeared on the right.
-
-## Step 5. Infinite H: count behaviours
-
-```
-let fix X : Type
 let fix H : Set(X -> Bool)
 let fix e in R where e > 0
 let fix m in N where m >= 1
-let fix D : Measure(X × Bool) where IsProbabilityMeasure(D)
 # ghost sample: on 2m points, H acts like only Growth(H, 2m) functions
 Prob[S ~ D^m](not Representative(S, H, D, e)) <= 4 * Growth(H, 2 * m) * exp(-e^2 * m / 8)
 ```
 
 card(H) becomes Growth(H, 2m). The count can now grow with m, so the bound goes to 0 only if the decay outruns it.
 
-## Step 6. Finite VC dimension
+## Step 5. Finite VC dimension
 
 ```
 let fix X : Type
+let fix D : Measure(X × Bool) where IsProbabilityMeasure(D)
 let fix d in N
 let fix H : Set(X -> Bool) where VCdim(H) = d
 let fix e in R where e > 0
 let fix m in N where m >= 1
-let fix D : Measure(X × Bool) where IsProbabilityMeasure(D)
 # Sauer: Growth(H, 2m) <= (2m + 1)^d
 Prob[S ~ D^m](not Representative(S, H, D, e)) <= 4 * (2 * m + 1)^d * exp(-e^2 * m / 8)
 ```
 
 A polynomial count against exponential decay, so the bound goes to 0. d sets how long that takes.
 
-## Step 7. All functions
+## Step 6. All functions
 
 ```
 let fix X : Type where Infinite(X)
 def H := Set[h : X -> Bool](h)
-# Growth(H, 2m) = 4^m, so Step 5 gives 4 * 4^m * exp(-e^2 * m / 8)
+# Growth(H, 2m) = 4^m, so Step 4 gives 4 * 4^m * exp(-e^2 * m / 8)
 #   = 4 * exp(m * (log(4) - e^2 / 8)), which grows with m: no information
 
 # No Free Lunch: no better bound exists
@@ -122,16 +107,18 @@ let D : Measure(X × Bool) where IsProbabilityMeasure(D),
 exists D
 ```
 
-At e = 1/8, the failure probability stays at least 1/7, for any m and any algorithm.
+At e = 1/8, the failure probability stays at least 1/7, for every m and every algorithm. Here D is a witness chosen after m and A, so it may depend on both.
 
-## Step 8. Realizable D
+## Step 7. Realizable D
 
 ```
 let fix X : Type
 let fix H : Set(X -> Bool) where Finite(H), card(H) >= 1
+# D moved below H: Realizable(H, D) mentions H, so H must come first
+# both lines are fixed, so the move changes nothing else
+let fix D : Measure(X × Bool) where IsProbabilityMeasure(D), Realizable(H, D)
 let fix e in R where 0 < e < 1
 let fix m in N where m >= 1
-let fix D : Measure(X × Bool) where IsProbabilityMeasure(D), Realizable(H, D)
 # one bad h survives m draws with probability (1 - e)^m <= exp(-e m)
 Prob[S ~ D^m]({ let h in VersionSpace(H, S) where Error(D, h) > e; exists h }) <= card(H) * exp(-e * m)
 ```
@@ -149,10 +136,9 @@ UniformConvergence(H) <=> ERMLearnsAgnostic(H) <=> AgnosticPACLearnable(H)
 
 | Step | condition | bound | → 0 as m grows? |
 |---|---|---|---|
-| 1 | one D, one h | 2 exp(-2e²m) | yes |
-| 3 | one D, finite H | 2 card(H) exp(-2e²m) | yes |
-| 4 | any D, finite H | same as Step 3 | yes |
-| 5 | any D, any H | 4 Growth(H, 2m) exp(-e²m/8) | depends on Growth |
-| 6 | any D, VCdim d | 4 (2m + 1)^d exp(-e²m/8) | yes |
-| 7 | any D, all functions | at least 1/7 at e = 1/8 | no |
-| 8 | realizable D, finite H | card(H) exp(-em) | yes, faster |
+| 1 | one h | 2 exp(-2e²m) | yes |
+| 3 | finite H | 2 card(H) exp(-2e²m) | yes |
+| 4 | any H | 4 Growth(H, 2m) exp(-e²m/8) | depends on Growth |
+| 5 | VCdim d | 4 (2m + 1)^d exp(-e²m/8) | yes |
+| 6 | all functions | at least 1/7 at e = 1/8 | no |
+| 7 | realizable D, finite H | card(H) exp(-em) | yes, faster |
