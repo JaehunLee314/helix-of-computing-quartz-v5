@@ -158,3 +158,23 @@ UniformConvergence(H) <=> ERMLearnsAgnostic(H) <=> AgnosticPACLearnable(H)
 | 5 | VCdim d | 4 (2m + 1)^d exp(-e²m/8) | yes |
 | 6 | all functions | at least 1/7 at e = 1/8 | no |
 | 7 | realizable D, finite H | card(H) exp(-em) | yes, faster |
+
+## References
+
+**Step 1.** Ref: UML ch. 4 "Learning via Uniform Convergence", Lemma 4.5 (Hoeffding's Inequality).
+
+**Step 2.** Ref: UML ch. 2 "A Gentle Start", §2.2.1 "Something May Go Wrong – Overfitting".
+`Representative`: UML ch. 4, Definition 4.1 (ε-representative sample).
+
+**Step 3.** Ref: UML ch. 4, §4.2 "Finite Classes Are Agnostic PAC Learnable" (union bound + Lemma 4.5), Corollary 4.6.
+
+**Step 4.** `Restriction`: UML ch. 6 "The VC-Dimension", Definition 6.2 (restriction of H to C). `Growth`: Definition 6.9 (Growth Function).
+Bound: Vapnik & Chervonenkis (1971), "On the Uniform Convergence of Relative Frequencies of Events to Their Probabilities". UML proves the same idea in expectation form instead: §6.5.2, Theorem 6.11.
+
+**Step 5.** Ref: UML ch. 6, §6.5.1, Lemma 6.10 (Sauer–Shelah–Perles). (2m + 1)^d is a loose consequence of it, since sum[i in 0...d](choose(2m, i)) <= (2m + 1)^d. VC dimension: Definition 6.5.
+
+**Step 6.** Ref: UML ch. 5 "The Bias-Complexity Tradeoff", Theorem 5.1 (No-Free-Lunch) and Corollary 5.2. Growth(H, m) = 2^m: every C is shattered (Definition 6.3).
+
+**Step 7.** Ref: UML ch. 2, §2.3.1 "Finite Hypothesis Classes", Corollary 2.3. The (1 - e)^m <= exp(-e m) step is in its proof.
+
+**The Theorem.** Ref: UML ch. 6, §6.4, Theorem 6.7 (The Fundamental Theorem of Statistical Learning). Theorem 6.8 is the quantitative version.
