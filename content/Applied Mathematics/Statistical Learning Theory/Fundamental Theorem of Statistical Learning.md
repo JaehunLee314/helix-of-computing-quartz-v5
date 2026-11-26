@@ -94,11 +94,27 @@ card(H) becomes Growth(H, 2m). The count can now grow with m, so the bound goes 
 
 ## Step 5. Finite VC dimension
 
+H shatters C when it can produce every labelling of C. The VC dimension is the size of the largest set H can shatter.
+
+```
+# every labelling of C is produced by some h in H
+def Shatters<X : Type>(H : Set(X -> Bool), C : Finset(X)) {
+  card(Restriction(H, C)) = 2^card(C)
+}
+
+# ENat is mathlib's N with ∞ added: VCdim(H) = ∞ when H shatters arbitrarily large sets
+def VCdim<X : Type>(H : Set(X -> Bool)) -> ENat {
+  return sup[C : Finset(X) where Shatters(H, C)](card(C))
+}
+```
+
+So Growth(H, m) = 2^m for every m <= VCdim(H), and Sauer's lemma says the growth turns polynomial once m passes it.
+
 ```
 let fix X : Type
 let fix D : Measure(X × Bool) where IsProbabilityMeasure(D)
 let fix d in N
-let fix H : Set(X -> Bool) where VCdim(H) = d
+let fix H : Set(X -> Bool) where VCdim(H) = d # d in N, so VCdim(H) is finite
 let fix e in R where e > 0
 let fix m in N where m >= 1
 # Sauer: Growth(H, 2m) <= (2m + 1)^d
@@ -171,7 +187,7 @@ UniformConvergence(H) <=> ERMLearnsAgnostic(H) <=> AgnosticPACLearnable(H)
 **Step 4.** `Restriction`: UML ch. 6 "The VC-Dimension", Definition 6.2 (restriction of H to C). `Growth`: Definition 6.9 (Growth Function).
 Bound: Vapnik & Chervonenkis (1971), "On the Uniform Convergence of Relative Frequencies of Events to Their Probabilities". UML proves the same idea in expectation form instead: §6.5.2, Theorem 6.11.
 
-**Step 5.** Ref: UML ch. 6, §6.5.1, Lemma 6.10 (Sauer–Shelah–Perles). (2m + 1)^d is a loose consequence of it, since sum[i in 0...d](choose(2m, i)) <= (2m + 1)^d. VC dimension: Definition 6.5.
+**Step 5.** Ref: UML ch. 6 "The VC-Dimension": Definition 6.3 (Shattering), Definition 6.5 (VC-dimension), and §6.5.1, Lemma 6.10 (Sauer–Shelah–Perles). The bound (2m + 1)^d is a looser form of Lemma 6.10, since sum[i in 0...d](choose(2m, i)) <= (2m + 1)^d.
 
 **Step 6.** Ref: UML ch. 5 "The Bias-Complexity Tradeoff", Theorem 5.1 (No-Free-Lunch) and Corollary 5.2. Growth(H, m) = 2^m: every C is shattered (Definition 6.3).
 
